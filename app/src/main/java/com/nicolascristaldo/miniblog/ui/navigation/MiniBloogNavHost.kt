@@ -1,17 +1,15 @@
 package com.nicolascristaldo.miniblog.ui.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.nicolascristaldo.miniblog.ui.screens.auth.initial.InitialScreen
+import com.nicolascristaldo.miniblog.ui.screens.auth.login.LogInScreen
+import com.nicolascristaldo.miniblog.ui.screens.auth.signup.SignUpScreen
 import com.nicolascristaldo.miniblog.ui.screens.home.HomeScreen
-import com.nicolascristaldo.miniblog.ui.screens.initial.InitialScreen
-import com.nicolascristaldo.miniblog.ui.screens.login.LogInScreen
-import com.nicolascristaldo.miniblog.ui.screens.signup.SignUpScreen
 
 @Composable
 fun MiniBlogNavHost(
@@ -25,14 +23,20 @@ fun MiniBlogNavHost(
     ) {
         composable(route = "initial") {
             InitialScreen(
+                navigateToLogIn = { navController.navigate("login") },
+                navigateToSignUp = { navController.navigate("signup") },
                 modifier = Modifier.fillMaxSize()
             )
         }
         composable(route = "login") {
-            LogInScreen()
+            LogInScreen(
+                modifier = Modifier.fillMaxSize()
+            )
         }
         composable(route = "signup") {
-            SignUpScreen()
+            SignUpScreen(
+                modifier = Modifier.fillMaxSize()
+            )
         }
         composable(route = "home") {
             HomeScreen()
