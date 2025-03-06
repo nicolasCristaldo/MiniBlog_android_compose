@@ -15,7 +15,7 @@ class SignUpViewModel @Inject constructor(
     private val repository: AuthRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(SignUpUiState())
-    val uistate get() = _uiState.asStateFlow()
+    val uiState get() = _uiState.asStateFlow()
 
     private val _verificationResult = MutableStateFlow<Result<Unit>?>(null)
     val verificationResult get() = _verificationResult.asStateFlow()

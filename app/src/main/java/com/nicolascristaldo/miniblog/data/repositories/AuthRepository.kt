@@ -10,7 +10,17 @@ import javax.inject.Inject
 class AuthRepository @Inject constructor(
     private val auth: FirebaseAuth
 ) {
-    fun getCurrentUser(): FirebaseUser? = auth.currentUser
+    suspend fun getCurrentUser(): FirebaseUser? {
+        val user = auth.currentUser
+        return try {
+            user?.reload()?.await()
+            user
+        }
+        catch (e: Exception) {
+            auth.signOut()
+            null
+        }
+    }
 
     fun signUpWithEmail(email: String, password: String): Flow<Result<Unit>> = flow {
         try {

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -22,9 +23,14 @@ import com.nicolascristaldo.miniblog.ui.screens.auth.components.AuthTextField
 @Composable
 fun LogInScreen(
     viewModel: LoginViewModel = hiltViewModel(),
+    navigateToHome: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(uiState) {
+        if (uiState.isSuccess) { navigateToHome() }
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
