@@ -59,6 +59,7 @@ dependencies {
     //firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
 
     //Hilt
     implementation(libs.androidx.hilt.navigation.compose)

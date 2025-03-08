@@ -17,9 +17,6 @@ class SignUpViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(SignUpUiState())
     val uiState get() = _uiState.asStateFlow()
 
-    private val _verificationResult = MutableStateFlow<Result<Unit>?>(null)
-    val verificationResult get() = _verificationResult.asStateFlow()
-
     fun onNameChanged(newName: String) {
         _uiState.value = _uiState.value.copy(name = newName)
     }
@@ -49,12 +46,6 @@ class SignUpViewModel @Inject constructor(
                     state.copy(isLoading = false, error = result.exceptionOrNull()?.message)
                 }
             }
-        }
-    }
-
-    fun resendVerificationEmail() = viewModelScope.launch {
-        repository.resendVerificationEmail().collect { result ->
-            _verificationResult.value = result
         }
     }
 

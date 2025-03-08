@@ -2,8 +2,10 @@ package com.nicolascristaldo.miniblog.ui.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -13,6 +15,7 @@ import com.nicolascristaldo.miniblog.ui.screens.auth.AuthViewModel
 import com.nicolascristaldo.miniblog.ui.screens.auth.initial.InitialScreen
 import com.nicolascristaldo.miniblog.ui.screens.auth.login.LogInScreen
 import com.nicolascristaldo.miniblog.ui.screens.auth.signup.SignUpScreen
+import com.nicolascristaldo.miniblog.ui.screens.auth.verification.EmailVerificationScreen
 import com.nicolascristaldo.miniblog.ui.screens.home.HomeScreen
 
 @Composable
@@ -21,8 +24,14 @@ fun MiniBlogNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-    val userState by authViewModel.userState.collectAsState()
-    val startDestination = if(userState != null) "home" else "initial"
+    val user by authViewModel.userState.collectAsState()
+    val startDestination = remember(user) {
+        when {
+            user == null -> "initial"
+            user?.isEmailVerified == true -> "home"
+            else -> "verification"
+        }
+    }
 
     NavHost(
         navController = navController,
@@ -50,6 +59,18 @@ fun MiniBlogNavHost(
 
         composable(route = "signup") {
             SignUpScreen(
+                navigateToVerification = { navController.navigate("verification") },
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+
+        composable(route = "verification") {
+            LaunchedEffect(Unit) {
+                authViewModel.startResetTimer()
+            }
+
+            EmailVerificationScreen(
+                viewModel = authViewModel,
                 navigateToHome = {
                     navController.navigate("home") {
                         popUpTo("initial") { inclusive = true }

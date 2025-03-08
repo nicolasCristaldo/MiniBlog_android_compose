@@ -11,13 +11,15 @@ class AuthRepository @Inject constructor(
     private val auth: FirebaseAuth
 ) {
     suspend fun getCurrentUser(): FirebaseUser? {
-        val user = auth.currentUser
         return try {
-            user?.reload()?.await()
-            user
+            if( auth.currentUser != null) {
+                auth.currentUser!!.reload().await()
+                auth.currentUser
+            }
+            else null
         }
         catch (e: Exception) {
-            auth.signOut()
+            logOut()
             null
         }
     }

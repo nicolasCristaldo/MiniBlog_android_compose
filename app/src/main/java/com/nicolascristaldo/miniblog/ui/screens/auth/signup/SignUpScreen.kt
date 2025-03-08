@@ -18,13 +18,13 @@ import com.nicolascristaldo.miniblog.ui.screens.auth.components.AuthTextField
 @Composable
 fun SignUpScreen(
     viewModel: SignUpViewModel = hiltViewModel(),
-    navigateToHome: () -> Unit,
+    navigateToVerification: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(uiState) {
-        if (uiState.isSuccess) { navigateToHome() }
+        if (uiState.isSuccess) { navigateToVerification() }
     }
 
     Column(
