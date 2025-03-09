@@ -1,6 +1,5 @@
 package com.nicolascristaldo.miniblog.ui.screens.auth.initial
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -14,13 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush.Companion.verticalGradient
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nicolascristaldo.miniblog.R
+import com.nicolascristaldo.miniblog.ui.components.LogoImage
 import com.nicolascristaldo.miniblog.ui.screens.auth.initial.components.LogButton
-import com.nicolascristaldo.miniblog.ui.theme.black
 import com.nicolascristaldo.miniblog.ui.theme.dark_blue
 import com.nicolascristaldo.miniblog.ui.theme.light_blue
 
@@ -35,16 +33,14 @@ fun InitialScreen(
         modifier = modifier
             .background(
                 verticalGradient(
-                    colors = listOf(black, dark_blue),
+                    colors = listOf(Color.Black, dark_blue),
                     startY = 0f,
                     endY = Float.POSITIVE_INFINITY
                 )
             )
     ) {
         Spacer(modifier = Modifier.weight(.5f))
-        Image(
-            painter = painterResource(id = R.drawable.app_logo),
-            contentDescription = null,
+        LogoImage(
             modifier = Modifier
                 .size(130.dp)
                 .padding(bottom = 32.dp)

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -11,7 +12,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -37,7 +37,6 @@ fun LogInScreen(
         verticalArrangement = Arrangement.Center,
         modifier = modifier
     ) {
-        Text(text = "email:")
         AuthTextField(
             value = uiState.email,
             onValueChange = { viewModel.onEmailChanged(it) },
@@ -46,7 +45,6 @@ fun LogInScreen(
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
-        Text(text = "password:")
         AuthTextField(
             value = uiState.password,
             onValueChange = { viewModel.onPasswordChanged(it) },
@@ -56,23 +54,21 @@ fun LogInScreen(
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
+        Button(
+            onClick = { viewModel.login() },
+            modifier = Modifier.padding(bottom = 8.dp)
+        ) {
+            Text(text = "Log in")
+        }
+
         uiState.error?.let { message ->
             Text(
                 text = message,
-                color = Color.Red,
+                color = MaterialTheme.colorScheme.error,
                 fontSize = 12.sp,
                 textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 8.dp)
+                fontWeight = FontWeight.Bold
             )
-        }
-
-        Button(
-            onClick = {
-                viewModel.login()
-            }
-        ) {
-            Text(text = "Log in")
         }
     }
 }

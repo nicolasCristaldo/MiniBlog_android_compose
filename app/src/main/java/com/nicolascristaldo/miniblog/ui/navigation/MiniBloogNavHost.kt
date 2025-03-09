@@ -1,12 +1,11 @@
 package com.nicolascristaldo.miniblog.ui.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -17,6 +16,7 @@ import com.nicolascristaldo.miniblog.ui.screens.auth.login.LogInScreen
 import com.nicolascristaldo.miniblog.ui.screens.auth.signup.SignUpScreen
 import com.nicolascristaldo.miniblog.ui.screens.auth.verification.EmailVerificationScreen
 import com.nicolascristaldo.miniblog.ui.screens.home.HomeScreen
+import com.nicolascristaldo.miniblog.ui.screens.splash.SplashScreen
 
 @Composable
 fun MiniBlogNavHost(
@@ -24,20 +24,23 @@ fun MiniBlogNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-    val user by authViewModel.userState.collectAsState()
-    val startDestination = remember(user) {
-        when {
-            user == null -> "initial"
-            user?.isEmailVerified == true -> "home"
-            else -> "verification"
-        }
-    }
-
     NavHost(
         navController = navController,
-        startDestination = startDestination,
+        startDestination = "splash",
         modifier = modifier
     ) {
+        composable(route = "splash") {
+            SplashScreen(
+                viewModel = authViewModel,
+                navigate = { destination ->
+                    navController.navigate(destination) {
+                        popUpTo("splash") { inclusive = true }
+                    }
+                },
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+
         composable(route = "initial") {
             InitialScreen(
                 navigateToLogIn = { navController.navigate("login") },
@@ -53,14 +56,18 @@ fun MiniBlogNavHost(
                         popUpTo("initial") { inclusive = true }
                     }
                 },
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(8.dp)
             )
         }
 
         composable(route = "signup") {
             SignUpScreen(
                 navigateToVerification = { navController.navigate("verification") },
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(8.dp)
             )
         }
 
@@ -76,7 +83,9 @@ fun MiniBlogNavHost(
                         popUpTo("initial") { inclusive = true }
                     }
                 },
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(8.dp)
             )
         }
 
