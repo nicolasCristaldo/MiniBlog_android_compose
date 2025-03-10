@@ -5,6 +5,9 @@ import androidx.compose.ui.graphics.Color
 val dark_blue = Color(0xFF040B3F)
 val light_blue = Color(0xFF76A0EC)
 
+val disabled_content = Color(0xFF1C1B1B)
+val disabled_container = Color(0xFFC8CACC)
+
 val primaryLight = Color(0xFF425E91)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFFD7E2FF)

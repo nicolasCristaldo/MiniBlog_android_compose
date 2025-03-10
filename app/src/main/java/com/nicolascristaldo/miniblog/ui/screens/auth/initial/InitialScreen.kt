@@ -31,13 +31,6 @@ fun InitialScreen(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
-            .background(
-                verticalGradient(
-                    colors = listOf(Color.Black, dark_blue),
-                    startY = 0f,
-                    endY = Float.POSITIVE_INFINITY
-                )
-            )
     ) {
         Spacer(modifier = Modifier.weight(.5f))
         LogoImage(

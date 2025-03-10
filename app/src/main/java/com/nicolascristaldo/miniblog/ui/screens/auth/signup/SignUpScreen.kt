@@ -3,7 +3,6 @@ package com.nicolascristaldo.miniblog.ui.screens.auth.signup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,11 +11,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.nicolascristaldo.miniblog.ui.screens.auth.components.AuthButton
 import com.nicolascristaldo.miniblog.ui.screens.auth.components.AuthTextField
 
 @Composable
@@ -36,6 +37,14 @@ fun SignUpScreen(
         verticalArrangement = Arrangement.Center,
         modifier = modifier
     ) {
+        Text(
+            text = "Create Your Account",
+            fontSize = 32.sp,
+            textAlign = TextAlign.Center,
+            color = Color.White,
+            modifier = Modifier.padding(bottom = 32.dp)
+        )
+
         AuthTextField(
             value = uiState.name,
             onValueChange = { viewModel.onNameChanged(it) },
@@ -74,20 +83,20 @@ fun SignUpScreen(
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        Button(
+        AuthButton(
             onClick = { viewModel.signUp() },
             enabled = viewModel.validateInputForm(),
+            text = "Sign up",
             modifier = Modifier.padding(bottom = 8.dp)
-        ) {
-            Text(text = "Sign up")
-        }
+        )
 
         uiState.error?.let {
             Text(
                 text = it,
                 color = MaterialTheme.colorScheme.error,
                 textAlign = TextAlign.Center,
-                fontSize = 12.sp
+                fontSize = 12.sp,
+                modifier = Modifier.padding(horizontal = 8.dp)
             )
         }
     }

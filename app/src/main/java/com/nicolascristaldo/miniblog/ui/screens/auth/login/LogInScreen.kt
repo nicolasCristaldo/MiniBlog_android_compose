@@ -3,7 +3,6 @@ package com.nicolascristaldo.miniblog.ui.screens.auth.login
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,12 +11,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.nicolascristaldo.miniblog.ui.screens.auth.components.AuthButton
 import com.nicolascristaldo.miniblog.ui.screens.auth.components.AuthTextField
 
 @Composable
@@ -37,6 +38,14 @@ fun LogInScreen(
         verticalArrangement = Arrangement.Center,
         modifier = modifier
     ) {
+        Text(
+            text = "Access Your Account",
+            fontSize = 32.sp,
+            textAlign = TextAlign.Center,
+            color = Color.White,
+            modifier = Modifier.padding(bottom = 32.dp)
+        )
+
         AuthTextField(
             value = uiState.email,
             onValueChange = { viewModel.onEmailChanged(it) },
@@ -54,12 +63,11 @@ fun LogInScreen(
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        Button(
+        AuthButton(
             onClick = { viewModel.login() },
+            text = "Log in",
             modifier = Modifier.padding(bottom = 8.dp)
-        ) {
-            Text(text = "Log in")
-        }
+        )
 
         uiState.error?.let { message ->
             Text(
@@ -67,7 +75,8 @@ fun LogInScreen(
                 color = MaterialTheme.colorScheme.error,
                 fontSize = 12.sp,
                 textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(horizontal = 8.dp)
             )
         }
     }

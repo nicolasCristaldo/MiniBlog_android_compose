@@ -1,11 +1,9 @@
 package com.nicolascristaldo.miniblog.ui.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -17,6 +15,7 @@ import com.nicolascristaldo.miniblog.ui.screens.auth.signup.SignUpScreen
 import com.nicolascristaldo.miniblog.ui.screens.auth.verification.EmailVerificationScreen
 import com.nicolascristaldo.miniblog.ui.screens.home.HomeScreen
 import com.nicolascristaldo.miniblog.ui.screens.splash.SplashScreen
+import com.nicolascristaldo.miniblog.ui.theme.gradientBackGround
 
 @Composable
 fun MiniBlogNavHost(
@@ -45,7 +44,9 @@ fun MiniBlogNavHost(
             InitialScreen(
                 navigateToLogIn = { navController.navigate("login") },
                 navigateToSignUp = { navController.navigate("signup") },
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .gradientBackGround()
             )
         }
 
@@ -58,7 +59,7 @@ fun MiniBlogNavHost(
                 },
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(8.dp)
+                    .gradientBackGround()
             )
         }
 
@@ -67,7 +68,7 @@ fun MiniBlogNavHost(
                 navigateToVerification = { navController.navigate("verification") },
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(8.dp)
+                    .gradientBackGround()
             )
         }
 
@@ -85,7 +86,7 @@ fun MiniBlogNavHost(
                 },
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(8.dp)
+                    .gradientBackGround()
             )
         }
 
