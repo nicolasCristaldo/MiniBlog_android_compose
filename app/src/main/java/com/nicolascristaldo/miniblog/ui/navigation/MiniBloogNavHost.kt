@@ -14,12 +14,14 @@ import com.nicolascristaldo.miniblog.ui.screens.auth.login.LogInScreen
 import com.nicolascristaldo.miniblog.ui.screens.auth.signup.SignUpScreen
 import com.nicolascristaldo.miniblog.ui.screens.auth.verification.EmailVerificationScreen
 import com.nicolascristaldo.miniblog.ui.screens.home.HomeScreen
+import com.nicolascristaldo.miniblog.ui.screens.home.HomeViewModel
 import com.nicolascristaldo.miniblog.ui.screens.splash.SplashScreen
 import com.nicolascristaldo.miniblog.ui.theme.gradientBackGround
 
 @Composable
 fun MiniBlogNavHost(
     authViewModel: AuthViewModel = hiltViewModel(),
+    homeViewModel: HomeViewModel = hiltViewModel(),
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
@@ -91,7 +93,12 @@ fun MiniBlogNavHost(
         }
 
         composable(route = "home") {
+            LaunchedEffect(Unit) {
+                homeViewModel.loadUser()
+            }
+
             HomeScreen(
+                viewModel = homeViewModel,
                 modifier = Modifier.fillMaxSize()
             )
         }

@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.sp
 import com.nicolascristaldo.miniblog.R
 import com.nicolascristaldo.miniblog.ui.components.LogoImage
 import com.nicolascristaldo.miniblog.ui.screens.auth.initial.components.LogButton
-import com.nicolascristaldo.miniblog.ui.theme.dark_blue
 import com.nicolascristaldo.miniblog.ui.theme.light_blue
 
 @Composable

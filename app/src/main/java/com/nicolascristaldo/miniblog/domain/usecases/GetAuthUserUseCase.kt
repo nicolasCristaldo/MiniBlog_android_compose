@@ -4,8 +4,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.nicolascristaldo.miniblog.data.repositories.AuthRepository
 import javax.inject.Inject
 
-class GetCurrentUserUseCase @Inject constructor(
+class GetAuthUserUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
-    suspend operator fun invoke(): FirebaseUser? = authRepository.getCurrentUser()
+    suspend operator fun invoke(): FirebaseUser? = authRepository.getAuthUser()
 }

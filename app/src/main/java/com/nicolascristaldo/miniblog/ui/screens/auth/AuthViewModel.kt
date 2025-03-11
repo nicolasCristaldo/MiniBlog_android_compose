@@ -3,7 +3,7 @@ package com.nicolascristaldo.miniblog.ui.screens.auth
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
-import com.nicolascristaldo.miniblog.domain.usecases.GetCurrentUserUseCase
+import com.nicolascristaldo.miniblog.domain.usecases.GetAuthUserUseCase
 import com.nicolascristaldo.miniblog.domain.usecases.ResendVerificationEmailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val resendVerificationEmailUseCase: ResendVerificationEmailUseCase,
-    private val getCurrentUserUseCase: GetCurrentUserUseCase
+    private val getCurrentUserUseCase: GetAuthUserUseCase
 ) : ViewModel() {
     private val _userState = MutableStateFlow<FirebaseUser?>(null)
     val userState get() = _userState.asStateFlow()

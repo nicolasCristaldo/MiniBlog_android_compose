@@ -10,7 +10,7 @@ import javax.inject.Inject
 class AuthRepository @Inject constructor(
     private val auth: FirebaseAuth
 ) {
-    suspend fun getCurrentUser(): FirebaseUser? {
+    suspend fun getAuthUser(): FirebaseUser? {
         return try {
             if( auth.currentUser != null) {
                 auth.currentUser!!.reload().await()
