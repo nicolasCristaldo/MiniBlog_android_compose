@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.nicolascristaldo.miniblog.ui.MiniBlogApp
 import com.nicolascristaldo.miniblog.ui.theme.MiniBlogTheme
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,15 +1,14 @@
 package com.nicolascristaldo.miniblog.ui.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.nicolascristaldo.miniblog.domain.model.User
 import com.nicolascristaldo.miniblog.ui.screens.auth.AuthViewModel
 import com.nicolascristaldo.miniblog.ui.screens.auth.initial.InitialScreen
 import com.nicolascristaldo.miniblog.ui.screens.auth.login.LogInScreen
@@ -23,6 +22,7 @@ import com.nicolascristaldo.miniblog.ui.theme.gradientBackGround
 
 @Composable
 fun MiniBlogNavHost(
+    user: User?,
     authViewModel: AuthViewModel = hiltViewModel(),
     homeViewModel: HomeViewModel = hiltViewModel(),
     navController: NavHostController,
@@ -30,36 +30,36 @@ fun MiniBlogNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "splash",
+        startDestination = AppDestinations.Splash.route,
         modifier = modifier
     ) {
-        composable(route = "splash") {
+        composable(route = AppDestinations.Splash.route) {
             SplashScreen(
                 viewModel = authViewModel,
                 navigate = { destination ->
                     navController.navigate(destination) {
-                        popUpTo("splash") { inclusive = true }
+                        popUpTo(AppDestinations.Splash.route) { inclusive = true }
                     }
                 },
                 modifier = Modifier.fillMaxSize()
             )
         }
 
-        composable(route = "initial") {
+        composable(route = AppDestinations.Initial.route) {
             InitialScreen(
-                navigateToLogIn = { navController.navigate("login") },
-                navigateToSignUp = { navController.navigate("signup") },
+                navigateToLogIn = { navController.navigate(AppDestinations.LogIn.route) },
+                navigateToSignUp = { navController.navigate(AppDestinations.SignUp.route) },
                 modifier = Modifier
                     .fillMaxSize()
                     .gradientBackGround()
             )
         }
 
-        composable(route = "login") {
+        composable(route = AppDestinations.LogIn.route) {
             LogInScreen(
                 navigateToHome = {
-                    navController.navigate("home") {
-                        popUpTo("initial") { inclusive = true }
+                    navController.navigate(AppDestinations.Home.route) {
+                        popUpTo(AppDestinations.Initial.route) { inclusive = true }
                     }
                 },
                 modifier = Modifier
@@ -68,16 +68,16 @@ fun MiniBlogNavHost(
             )
         }
 
-        composable(route = "signup") {
+        composable(route = AppDestinations.SignUp.route) {
             SignUpScreen(
-                navigateToVerification = { navController.navigate("verification") },
+                navigateToVerification = { navController.navigate(AppDestinations.Verification.route) },
                 modifier = Modifier
                     .fillMaxSize()
                     .gradientBackGround()
             )
         }
 
-        composable(route = "verification") {
+        composable(route = AppDestinations.Verification.route) {
             LaunchedEffect(Unit) {
                 authViewModel.startResetTimer()
             }
@@ -85,8 +85,8 @@ fun MiniBlogNavHost(
             EmailVerificationScreen(
                 viewModel = authViewModel,
                 navigateToHome = {
-                    navController.navigate("home") {
-                        popUpTo("initial") { inclusive = true }
+                    navController.navigate(AppDestinations.Home.route) {
+                        popUpTo(AppDestinations.Initial.route) { inclusive = true }
                     }
                 },
                 modifier = Modifier
@@ -95,28 +95,24 @@ fun MiniBlogNavHost(
             )
         }
 
-        composable(route = "home") {
+        composable(route = AppDestinations.Home.route) {
             LaunchedEffect(Unit) {
                 homeViewModel.loadUser()
             }
 
             HomeScreen(
+                user = user,
                 viewModel = homeViewModel,
-                navigateToProfile = { navController.navigate("profile/$it") },
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(8.dp)
+                modifier = Modifier.fillMaxSize()
             )
         }
 
-        composable(route = "profile/{uid}") { backStackEntry ->
-            val uid = backStackEntry.arguments?.getString("uid") ?: return@composable
+        composable(route = AppDestinations.Profile.route) { backStackEntry ->
+            val uid = backStackEntry.arguments?.getString("uid") ?: ""
 
             ProfileScreen(
                 uid = uid,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(8.dp)
+                modifier = Modifier.fillMaxSize()
             )
         }
     }

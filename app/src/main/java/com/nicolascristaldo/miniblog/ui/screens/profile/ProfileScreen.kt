@@ -44,27 +44,6 @@ fun ProfileScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "back",
-                modifier = Modifier
-                    .size(30.dp)
-                    .clickable {  }
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Icon(
-                imageVector = Icons.Filled.MoreVert,
-                contentDescription = "more",
-                modifier = Modifier
-                    .size(30.dp)
-                    .clickable {  }
-            )
-        }
-
         UserImage(
             modifier = Modifier
                 .size(130.dp)
