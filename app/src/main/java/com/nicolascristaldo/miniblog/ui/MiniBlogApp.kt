@@ -1,10 +1,11 @@
-package com.nicolascristaldo.miniblog
+package com.nicolascristaldo.miniblog.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -26,7 +27,16 @@ fun MiniBlogApp(
 ) {
     val user by homeViewModel.user.collectAsState()
     val backStackEntry by navController.currentBackStackEntryAsState()
+    val isLoggedOut by homeViewModel.isLoggedOut.collectAsState()
     val currentScreen = backStackEntry?.destination?.route
+
+    LaunchedEffect(isLoggedOut) {
+        if (isLoggedOut) {
+            navController.navigate(AppDestinations.Initial.route) {
+                popUpTo(AppDestinations.Home.route) { inclusive = true }
+            }
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -39,6 +49,7 @@ fun MiniBlogApp(
                 )
                 AppDestinations.Profile.route -> ProfileTopAppBar(
                     navigateBack = { navController.popBackStack() },
+                    logout = { homeViewModel.logOut() },
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
             }

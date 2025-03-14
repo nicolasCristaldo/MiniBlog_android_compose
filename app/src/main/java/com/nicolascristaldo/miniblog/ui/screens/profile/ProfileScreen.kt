@@ -1,17 +1,11 @@
 package com.nicolascristaldo.miniblog.ui.screens.profile
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.nicolascristaldo.miniblog.ui.components.UserImage
+import com.nicolascristaldo.miniblog.ui.screens.post.PostListScreen
 
 @Composable
 fun ProfileScreen(
@@ -87,6 +82,9 @@ fun ProfileScreen(
 
         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
-        // post list screen
+        PostListScreen(
+            currentUserId = authUser?.uid ?: "",
+            uid = uid
+        )
     }
 }

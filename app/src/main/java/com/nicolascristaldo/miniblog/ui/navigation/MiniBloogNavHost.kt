@@ -103,6 +103,9 @@ fun MiniBlogNavHost(
             HomeScreen(
                 user = user,
                 viewModel = homeViewModel,
+                navigateToUserProfile = { uid ->
+                    navController.navigate(AppDestinations.Profile.createRoute(uid))
+                },
                 modifier = Modifier.fillMaxSize()
             )
         }

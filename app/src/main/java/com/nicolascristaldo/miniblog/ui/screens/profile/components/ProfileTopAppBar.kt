@@ -3,7 +3,7 @@ package com.nicolascristaldo.miniblog.ui.screens.profile.components
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ProfileTopAppBar(
     navigateBack: () -> Unit,
+    logout: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     CenterAlignedTopAppBar(
@@ -35,10 +36,10 @@ fun ProfileTopAppBar(
         },
         actions = {
             IconButton(
-                onClick = {  }
+                onClick = { logout() }
             ) {
                 Icon(
-                    imageVector = Icons.Filled.MoreVert,
+                    imageVector = Icons.AutoMirrored.Filled.ExitToApp,
                     contentDescription = "more",
                     tint = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier.size(30.dp)
