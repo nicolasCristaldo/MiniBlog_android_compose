@@ -1,12 +1,11 @@
 package com.nicolascristaldo.miniblog.ui.screens.profile
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -14,77 +13,144 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.nicolascristaldo.miniblog.ui.components.UserImage
+import com.google.firebase.auth.FirebaseUser
+import com.nicolascristaldo.miniblog.domain.model.User
 import com.nicolascristaldo.miniblog.ui.screens.post.PostListScreen
+import com.nicolascristaldo.miniblog.ui.screens.profile.components.EditProfileDialog
+import com.nicolascristaldo.miniblog.ui.screens.profile.components.ProfileHeader
 
+//@Composable
+//fun ProfileScreen(
+//    uid: String,
+//    viewModel: ProfileViewModel = hiltViewModel(),
+//    modifier: Modifier = Modifier
+//) {
+//    val user by viewModel.user.collectAsState()
+//    val authUser by viewModel.authUser.collectAsState()
+//    val isEditing by viewModel.isEditing.collectAsState()
+//
+//    if (authUser != null) {
+//        // Solo se ejecuta una vez, asumiendo que uid no cambia
+//        LaunchedEffect(Unit) {
+//            viewModel.listenUserChanges(uid = uid)
+//        }
+//
+//        Box(modifier = modifier) {
+//            if (user != null) {
+//                ProfileContent(
+//                    user = user!!, // Forzamos no-null porque ya comprobamos
+//                    authUser = authUser!!,
+//                    isEditing = isEditing,
+//                    onEditClick = { viewModel.changeEditingState(true) },
+//                    uid = uid,
+//                    formatDate = { timestamp -> viewModel.formatDate(timestamp) }
+//                )
+//            } else {
+//                // Indicador de carga mientras user es null
+//                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+//            }
+//
+//            if (isEditing && user != null) {
+//                EditProfileDialog(
+//                    user = user!!,
+//                    changeEditingState = { viewModel.changeEditingState(false) },
+//                    updateUser = { name, bio -> viewModel.updateUser(name, bio) }
+//                )
+//            }
+//        }
+//    } else {
+//        Text(
+//            text = "Usuario no autenticado",
+//            modifier = Modifier.fillMaxSize(),
+//            textAlign = TextAlign.Center
+//        )
+//    }
+//}
+//
+//@Composable
+//private fun ProfileContent(
+//    user: User,
+//    authUser: FirebaseUser,
+//    isEditing: Boolean,
+//    onEditClick: () -> Unit,
+//    uid: String,
+//    formatDate: (Long?) -> String,
+//    modifier: Modifier = Modifier
+//) {
+//    Column(
+//        horizontalAlignment = Alignment.CenterHorizontally,
+//        modifier = if (isEditing) Modifier
+//            .blur(8.dp)
+//            .alpha(0.6f)
+//        else modifier
+//    ) {
+//        ProfileHeader(
+//            user = user,
+//            authUser = authUser,
+//            formatDate = { timestamp -> formatDate(timestamp) },
+//            changeEditingState = onEditClick,
+//            modifier = Modifier.padding(horizontal = 16.dp)
+//        )
+//
+//        HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
+//
+//        PostListScreen(
+//            currentUserId = authUser.uid,
+//            uid = uid
+//        )
+//    }
+//}
 @Composable
 fun ProfileScreen(
     uid: String,
     viewModel: ProfileViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.listenUserChanges(uid = uid)
-    }
-
     val user by viewModel.user.collectAsState()
     val authUser by viewModel.authUser.collectAsState()
+    val isEditing by viewModel.isEditing.collectAsState()
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-    ) {
-        UserImage(
-            modifier = Modifier
-                .size(130.dp)
-                .padding(16.dp)
-        )
-        Text(
-            text = user?.name ?: "",
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-        if (!user?.bio.isNullOrBlank()) {
-            Text(
-                text = user?.bio ?: "",
-                fontSize = 16.sp,
-                modifier = Modifier
-                    .padding(bottom = 16.dp)
-                    .fillMaxWidth()
-            )
+    if (authUser != null) {
+        LaunchedEffect(uid) {
+            viewModel.listenUserChanges(uid = uid)
         }
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = "Joined: " + viewModel.formatDate(user?.createdAt),
-                fontSize = 16.sp,
-                modifier = Modifier.weight(1f)
-            )
-            if(user?.uid == authUser?.uid) {
-                OutlinedButton(
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier.padding(start = 8.dp)
-                ) {
-                    Text(text = "Edit profile")
-                }
+        Box(modifier = modifier) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = if (isEditing) Modifier
+                    .blur(8.dp)
+                    .alpha(0.6f)
+                else Modifier
+            ) {
+                ProfileHeader(
+                    user = user,
+                    authUser = authUser,
+                    formatDate = { timestamp -> viewModel.formatDate(timestamp) },
+                    changeEditingState = { viewModel.changeEditingState(true) },
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+
+                HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
+
+                PostListScreen(
+                    currentUserId = authUser?.uid ?: "",
+                    uid = uid
+                )
+            }
+
+            if (isEditing) {
+                EditProfileDialog(
+                    user = user,
+                    changeEditingState = { viewModel.changeEditingState(false) },
+                    updateUser = { name, bio -> viewModel.updateUser(name, bio) }
+                )
             }
         }
-
-        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-
-        PostListScreen(
-            currentUserId = authUser?.uid ?: "",
-            uid = uid
-        )
     }
 }

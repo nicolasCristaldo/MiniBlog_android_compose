@@ -24,6 +24,9 @@ class PostViewModel @Inject constructor(
     private val _posts = MutableStateFlow<List<PostWithUser>>(emptyList())
     val posts get() = _posts.asStateFlow()
 
+    private val _postToDelete = MutableStateFlow<String?>(null)
+    val postToDelete get() = _postToDelete.asStateFlow()
+
     init {
         loadPosts()
     }
@@ -37,8 +40,15 @@ class PostViewModel @Inject constructor(
         _posts.value = postWithUser
     }
 
-    fun deletePost(postId: String) = viewModelScope.launch {
-        deletePostUseCase(postId)
+    fun deletePost() = viewModelScope.launch {
+        if(_postToDelete.value != null) {
+            deletePostUseCase(_postToDelete.value!!)
+            _postToDelete.value = null
+        }
+    }
+
+    fun changePostToDeleteValue(postId: String? = null) {
+        _postToDelete.value = postId
     }
 
     fun formatDate(timestamp: Long?): String {

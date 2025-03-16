@@ -2,6 +2,8 @@ package com.nicolascristaldo.miniblog.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseUser
+import com.nicolascristaldo.miniblog.data.repositories.AuthRepository
 import com.nicolascristaldo.miniblog.domain.model.Post
 import com.nicolascristaldo.miniblog.domain.model.User
 import com.nicolascristaldo.miniblog.domain.usecases.GetAuthUserUseCase
@@ -19,13 +21,25 @@ class HomeViewModel @Inject constructor(
     private val getAuthUserUseCase: GetAuthUserUseCase,
     private val logOutUseCase: LogOutUseCase,
     private val getUserUseCase: GetUserUseCase,
-    private val publishPostUseCase: PublishPostUseCase
+    private val publishPostUseCase: PublishPostUseCase,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
     private val _user = MutableStateFlow<User?>(null)
     val user get() = _user.asStateFlow()
 
-    private val _isLoggedOut = MutableStateFlow(false)
-    val isLoggedOut get() = _isLoggedOut
+    private val _authUser = MutableStateFlow<FirebaseUser?>(null)
+    val authUser get() = _authUser.asStateFlow()
+
+    private val _showLogOutDialog = MutableStateFlow(false)
+    val showLogOutDialog get() = _showLogOutDialog
+
+    init {
+        viewModelScope.launch {
+            authRepository.getAuthUserFlow().collect { user ->
+                _authUser.value = user
+            }
+        }
+    }
 
     fun loadUser() = viewModelScope.launch {
         val authUser = getAuthUserUseCase()
@@ -46,8 +60,14 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun changeLogOutDialogState(show: Boolean) {
+        _showLogOutDialog.value = show
+    }
+
     fun logOut() {
         logOutUseCase()
-        _isLoggedOut.value = true
+        _user.value = null
+        _authUser.value = null
+        _showLogOutDialog.value = false
     }
 }
