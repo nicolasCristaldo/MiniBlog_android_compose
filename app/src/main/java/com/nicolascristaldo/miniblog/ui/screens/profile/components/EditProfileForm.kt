@@ -6,50 +6,54 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.nicolascristaldo.miniblog.domain.model.User
+import com.nicolascristaldo.miniblog.ui.components.AppTextField
+import com.nicolascristaldo.miniblog.ui.screens.profile.ProfileUiState
 
 @Composable
 fun EditProfileForm(
-    user: User,
-    onSave: (String, String) -> Unit,
+    uiState: ProfileUiState,
+    changeName: (String) -> Unit,
+    changeBio: (String) -> Unit,
+    onSave: () -> Unit,
     onCancel: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var name by remember { mutableStateOf(user.name) }
-    var bio by remember { mutableStateOf(user.bio) }
+    LaunchedEffect(Unit) {
+        changeName(uiState.user?.name ?: "")
+        changeBio(uiState.user?.bio ?: "")
+    }
 
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
-        OutlinedTextField(
-            value = name,
-            onValueChange = { name = it },
-            label = { Text(text = "Name") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
+        AppTextField(
+            value = uiState.editingName,
+            onValueChange = { changeName(it) },
+            label = "Name",
+            validateInput = { uiState.isValidName() },
+            errorText = "Name must be between 3 and 20 characters",
+            modifier = Modifier.padding(bottom = 8.dp)
         )
-        OutlinedTextField(
-            value = bio,
-            onValueChange = { bio = it },
-            label = { Text(text = "Bio") },
+
+        AppTextField(
+            value = uiState.editingBio,
+            onValueChange = { changeBio(it) },
+            label = "Bio",
+            validateInput = { uiState.isValidBio() },
+            errorText = "Bio must be less than 100 characters",
+            singleLine = false,
             maxLines = 4,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 16.dp)
         )
+
         Row(
             horizontalArrangement = Arrangement.SpaceAround,
             modifier = Modifier.fillMaxWidth()
@@ -61,7 +65,8 @@ fun EditProfileForm(
             }
 
             Button(
-                onClick = { onSave(name, bio) }
+                onClick = { onSave() },
+                enabled = uiState.isValidInputForm()
             ) {
                 Text(text = "Save")
             }

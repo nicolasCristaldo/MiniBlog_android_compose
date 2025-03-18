@@ -10,13 +10,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.nicolascristaldo.miniblog.domain.model.User
+import com.nicolascristaldo.miniblog.ui.screens.profile.ProfileUiState
 
 @Composable
 fun EditProfileDialog(
-    user: User?,
+    uiState: ProfileUiState,
+    changeName: (String) -> Unit,
+    changeBio: (String) -> Unit,
     changeEditingState: (Boolean) -> Unit,
-    updateUser: (String, String) -> Unit,
+    updateUser: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Dialog(
@@ -32,9 +34,11 @@ fun EditProfileDialog(
                 .padding(16.dp)
         ) {
             EditProfileForm(
-                user = user!!,
-                onSave = { name, bio ->
-                    updateUser(name, bio)
+                uiState = uiState,
+                changeName = changeName,
+                changeBio = changeBio,
+                onSave = {
+                    updateUser()
                     changeEditingState(false)
                 },
                 onCancel = { changeEditingState(false) }

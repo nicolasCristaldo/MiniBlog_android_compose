@@ -4,58 +4,45 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.nicolascristaldo.miniblog.ui.components.AppTextField
+import com.nicolascristaldo.miniblog.ui.screens.home.HomeUiState
 
 @Composable
 fun PublishPostSection(
-    onPostPublished: (String) -> Unit,
+    uiState: HomeUiState,
+    onPostContentChange: (String) -> Unit,
+    onPublishPost: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var value by remember { mutableStateOf("") }
-
     Column(
-        horizontalAlignment = Alignment.End,
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
-        TextField(
-            value = value,
-            onValueChange = { value = it },
-            placeholder = {
-                Text(
-                    text = "What's on your mind?",
-                    color = MaterialTheme.colorScheme.secondary
-                )
-            },
+        AppTextField(
+            value = uiState.postContent,
+            onValueChange = { onPostContentChange(it) },
+            label = "Publish a post",
+            validateInput = { uiState.isValidPost() },
+            errorText = "Post must be less than 200 characters",
+            singleLine = false,
             maxLines = 4,
-            colors = TextFieldDefaults.colors().copy(
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
-                disabledContainerColor = Color.Transparent
-            ),
             modifier = Modifier
-                .padding(bottom = 8.dp)
+                .padding(bottom = 8.dp, start = 8.dp, end = 8.dp)
                 .fillMaxWidth()
         )
 
         Button(
             onClick = {
-                onPostPublished(value)
-                value = ""
+                onPublishPost()
+                onPostContentChange("")
             },
-            enabled = value.isNotBlank()
+            enabled = uiState.isValidPost()
         ) {
             Text(
                 text = "Send",

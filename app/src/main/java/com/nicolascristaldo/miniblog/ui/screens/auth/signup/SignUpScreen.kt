@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.nicolascristaldo.miniblog.ui.screens.auth.components.AuthButton
-import com.nicolascristaldo.miniblog.ui.screens.auth.components.AuthTextField
+import com.nicolascristaldo.miniblog.ui.components.AppTextField
 
 @Composable
 fun SignUpScreen(
@@ -45,47 +45,47 @@ fun SignUpScreen(
             modifier = Modifier.padding(bottom = 32.dp)
         )
 
-        AuthTextField(
+        AppTextField(
             value = uiState.name,
             onValueChange = { viewModel.onNameChanged(it) },
             label = "Name",
-            validateInput = { viewModel.isValidName(it) },
+            validateInput = { uiState.isValidName() },
             errorText = "Name must be at least 3 characters long.",
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier.padding(bottom = 8.dp, start = 32.dp, end = 32.dp)
         )
 
-        AuthTextField(
+        AppTextField(
             value = uiState.email,
             onValueChange = { viewModel.onEmailChanged(it) },
             label = "Email",
-            validateInput = { viewModel.isValidEmail(it) },
+            validateInput = { uiState.isValidEmail() },
             errorText = "Please enter a valid email address.",
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier.padding(bottom = 8.dp, start = 32.dp, end = 32.dp)
         )
 
-        AuthTextField(
+        AppTextField(
             value = uiState.password,
             onValueChange = { viewModel.onPasswordChanged(it) },
             label = "Password",
-            validateInput = { viewModel.isValidPassword(it) },
+            validateInput = { uiState.isValidPassword() },
             visualTransformation = PasswordVisualTransformation(),
             errorText = "Password must be at least 6 characters long.",
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier.padding(bottom = 8.dp, start = 32.dp, end = 32.dp)
         )
 
-        AuthTextField(
+        AppTextField(
             value = uiState.confirmPassword,
             onValueChange = { viewModel.onConfirmPasswordChanged(it) },
             label = "Confirm password",
-            validateInput = { viewModel.arePasswordsEqual(it, uiState.password) },
+            validateInput = { uiState.arePasswordsEqual() },
             visualTransformation = PasswordVisualTransformation(),
             errorText = "Passwords do not match.",
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 16.dp, start = 32.dp, end = 32.dp)
         )
 
         AuthButton(
             onClick = { viewModel.signUp() },
-            enabled = viewModel.validateInputForm(),
+            enabled = uiState.validateInputForm() && !uiState.isLoading,
             text = "Sign up",
             modifier = Modifier.padding(bottom = 8.dp)
         )

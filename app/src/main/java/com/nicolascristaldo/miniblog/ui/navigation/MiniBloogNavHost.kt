@@ -8,13 +8,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.nicolascristaldo.miniblog.domain.model.User
 import com.nicolascristaldo.miniblog.ui.screens.auth.AuthViewModel
 import com.nicolascristaldo.miniblog.ui.screens.auth.initial.InitialScreen
 import com.nicolascristaldo.miniblog.ui.screens.auth.login.LogInScreen
 import com.nicolascristaldo.miniblog.ui.screens.auth.signup.SignUpScreen
 import com.nicolascristaldo.miniblog.ui.screens.auth.verification.EmailVerificationScreen
 import com.nicolascristaldo.miniblog.ui.screens.home.HomeScreen
+import com.nicolascristaldo.miniblog.ui.screens.home.HomeUiState
 import com.nicolascristaldo.miniblog.ui.screens.home.HomeViewModel
 import com.nicolascristaldo.miniblog.ui.screens.profile.ProfileScreen
 import com.nicolascristaldo.miniblog.ui.screens.splash.SplashScreen
@@ -22,7 +22,7 @@ import com.nicolascristaldo.miniblog.ui.theme.gradientBackGround
 
 @Composable
 fun MiniBlogNavHost(
-    user: User?,
+    uiState: HomeUiState,
     authViewModel: AuthViewModel = hiltViewModel(),
     homeViewModel: HomeViewModel = hiltViewModel(),
     navController: NavHostController,
@@ -101,7 +101,7 @@ fun MiniBlogNavHost(
             }
 
             HomeScreen(
-                user = user,
+                uiState = uiState,
                 viewModel = homeViewModel,
                 navigateToUserProfile = { uid ->
                     navController.navigate(AppDestinations.Profile.createRoute(uid))

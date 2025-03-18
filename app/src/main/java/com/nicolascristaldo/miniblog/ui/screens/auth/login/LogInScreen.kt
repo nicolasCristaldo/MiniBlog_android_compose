@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.nicolascristaldo.miniblog.ui.screens.auth.components.AuthButton
-import com.nicolascristaldo.miniblog.ui.screens.auth.components.AuthTextField
+import com.nicolascristaldo.miniblog.ui.components.AppTextField
 
 @Composable
 fun LogInScreen(
@@ -46,21 +46,21 @@ fun LogInScreen(
             modifier = Modifier.padding(bottom = 32.dp)
         )
 
-        AuthTextField(
+        AppTextField(
             value = uiState.email,
             onValueChange = { viewModel.onEmailChanged(it) },
             label = "email",
             validateInput = { true },
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier.padding(bottom = 8.dp, start = 32.dp, end = 32.dp)
         )
 
-        AuthTextField(
+        AppTextField(
             value = uiState.password,
             onValueChange = { viewModel.onPasswordChanged(it) },
             label = "password",
             validateInput = { true },
             visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 16.dp, start = 32.dp, end = 32.dp)
         )
 
         AuthButton(

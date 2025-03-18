@@ -11,13 +11,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.nicolascristaldo.miniblog.domain.model.User
 import com.nicolascristaldo.miniblog.ui.screens.home.components.PublishPostSection
 import com.nicolascristaldo.miniblog.ui.screens.post.PostListScreen
 
 @Composable
 fun HomeScreen(
-    user: User?,
+    uiState: HomeUiState,
     viewModel: HomeViewModel,
     navigateToUserProfile: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -27,7 +26,9 @@ fun HomeScreen(
         modifier = modifier
     ) {
         PublishPostSection(
-            onPostPublished = { viewModel.publishPost(it) },
+            uiState = uiState,
+            onPostContentChange = viewModel::changePostContent,
+            onPublishPost = viewModel::publishPost,
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 8.dp)
                 .fillMaxWidth()
@@ -44,7 +45,7 @@ fun HomeScreen(
         HorizontalDivider()
 
         PostListScreen(
-            currentUserId = user?.uid ?: "",
+            currentUserId = uiState.user?.uid ?: "",
             navigateToUserProfile = navigateToUserProfile,
             modifier = Modifier.fillMaxSize()
         )

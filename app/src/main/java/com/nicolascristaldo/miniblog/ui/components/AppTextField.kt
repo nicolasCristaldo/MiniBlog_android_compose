@@ -1,8 +1,8 @@
-package com.nicolascristaldo.miniblog.ui.screens.auth.components
+package com.nicolascristaldo.miniblog.ui.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
@@ -20,17 +20,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun AuthTextField(
+fun AppTextField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
-    validateInput: (String) -> Boolean,
+    validateInput: () -> Boolean,
     errorText: String? = null,
+    singleLine: Boolean = true,
+    maxLines: Int = 1,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     modifier: Modifier = Modifier
 ) {
-    var isValidValue by remember { mutableStateOf(true) }
+    var isFirstTime by remember { mutableStateOf(true) }
 
     Column(
         modifier = modifier
@@ -40,12 +42,12 @@ fun AuthTextField(
             value = value,
             onValueChange = {
                 onValueChange(it)
-                isValidValue = validateInput(it)
+                if (isFirstTime) isFirstTime = false
             },
             label = { Text(text = label) },
-            isError = !isValidValue,
+            isError = if(isFirstTime) false else !validateInput(),
             trailingIcon = {
-                if (!isValidValue) {
+                if (!validateInput() && !isFirstTime) {
                     Icon(
                         imageVector = Icons.Filled.Warning,
                         tint = androidx.compose.material3.MaterialTheme.colorScheme.error,
@@ -53,12 +55,13 @@ fun AuthTextField(
                     )
                 }
             },
-            singleLine = true,
+            singleLine = singleLine,
+            maxLines = maxLines,
             visualTransformation = visualTransformation,
-            modifier = Modifier.width(300.dp)
+            modifier = Modifier.fillMaxWidth()
         )
 
-        if (!isValidValue) {
+        if (!validateInput() && !isFirstTime) {
             Text(
                 text = errorText ?: "Invalid input",
                 color = androidx.compose.material3.MaterialTheme.colorScheme.error,

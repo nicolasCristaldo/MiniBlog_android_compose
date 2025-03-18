@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ProfileTopAppBar(
     navigateBack: () -> Unit,
-    onLogOut: () -> Unit,
+    onLogOut: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     CenterAlignedTopAppBar(
@@ -36,7 +36,7 @@ fun ProfileTopAppBar(
         },
         actions = {
             IconButton(
-                onClick = { onLogOut() }
+                onClick = { onLogOut(true) }
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ExitToApp,

@@ -1,6 +1,5 @@
 package com.nicolascristaldo.miniblog.ui.screens.auth.signup
 
-import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nicolascristaldo.miniblog.data.repositories.AuthRepository
@@ -9,6 +8,7 @@ import com.nicolascristaldo.miniblog.domain.usecases.SaveUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,19 +21,19 @@ class SignUpViewModel @Inject constructor(
     val uiState get() = _uiState.asStateFlow()
 
     fun onNameChanged(newName: String) {
-        _uiState.value = _uiState.value.copy(name = newName)
+        _uiState.update { _uiState.value.copy(name = newName) }
     }
 
     fun onEmailChanged(newEmail: String) {
-        _uiState.value = _uiState.value.copy(email = newEmail)
+        _uiState.update { _uiState.value.copy(email = newEmail) }
     }
 
     fun onPasswordChanged(newPassword: String) {
-        _uiState.value = _uiState.value.copy(password = newPassword)
+        _uiState.update { _uiState.value.copy(password = newPassword) }
     }
 
     fun onConfirmPasswordChanged(newConfirmPassword: String) {
-        _uiState.value = _uiState.value.copy(confirmPassword = newConfirmPassword)
+        _uiState.update { _uiState.value.copy(confirmPassword = newConfirmPassword) }
     }
 
     fun signUp() {
@@ -52,22 +52,6 @@ class SignUpViewModel @Inject constructor(
             }
         }
     }
-
-    fun validateInputForm(): Boolean {
-        val state = _uiState.value
-        val isValid = isValidName(state.name) &&
-                isValidEmail(state.email) &&
-                isValidPassword(state.password) &&
-                arePasswordsEqual(state.password, state.confirmPassword)
-
-        return isValid
-    }
-
-    fun isValidName(name: String): Boolean = name.length in 3..20
-    fun isValidEmail(email: String): Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    fun isValidPassword(password: String): Boolean = password.length >= 6
-    fun arePasswordsEqual(password: String, confirmPassword: String): Boolean =
-        password == confirmPassword
 
     private suspend fun createUserProfile(name: String) {
         val currentUser = repository.getAuthUser()
