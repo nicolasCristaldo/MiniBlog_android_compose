@@ -28,6 +28,10 @@ fun MiniBlogApp(
     val uiState by homeViewModel.uiState.collectAsState()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = backStackEntry?.destination?.route
+    val profileUserId = if(currentScreen == AppDestinations.Profile.route) {
+        backStackEntry?.arguments?.getString("uid")
+    }
+    else null
 
     Scaffold(
         topBar = {
@@ -43,6 +47,8 @@ fun MiniBlogApp(
                 AppDestinations.Profile.route -> ProfileTopAppBar(
                     navigateBack = navController::popBackStack,
                     onLogOut = homeViewModel::changeLogOutDialogState,
+                    currentUserId = uiState.authUser?.uid ?: "",
+                    profileUserId = profileUserId ?: "",
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
             }

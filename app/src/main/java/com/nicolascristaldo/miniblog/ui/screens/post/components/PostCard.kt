@@ -76,7 +76,7 @@ fun PostCard(
                 text = postWhitUser.post.content
             )
             Text(
-                text = postWhitUser.post.createdAt.toString(),
+                text = postWhitUser.post.formatDate(),
                 textAlign = TextAlign.End,
                 color = MaterialTheme.colorScheme.secondary,
                 fontSize = 12.sp,

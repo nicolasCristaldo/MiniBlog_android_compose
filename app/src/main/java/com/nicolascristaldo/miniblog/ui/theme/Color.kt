@@ -8,6 +8,8 @@ val light_blue = Color(0xFF76A0EC)
 val disabled_content = Color(0xFF1C1B1B)
 val disabled_container = Color(0xFF868788)
 
+val authTextFieldTextColor = Color(0xFFE1E1E5)
+
 val primaryLight = Color(0xFF425E91)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFFD7E2FF)

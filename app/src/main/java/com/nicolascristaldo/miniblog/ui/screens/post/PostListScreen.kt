@@ -24,7 +24,7 @@ fun PostListScreen(
     modifier: Modifier = Modifier,
 ) {
     LaunchedEffect(Unit) {
-        viewModel.loadPosts(uid)
+        viewModel.listenPostsChanges(uid)
     }
 
     val postsWhitUser by viewModel.posts.collectAsState()

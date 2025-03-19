@@ -2,25 +2,27 @@ package com.nicolascristaldo.miniblog.data.repositories
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(
     private val auth: FirebaseAuth
 ) {
-    suspend fun getAuthUser(): FirebaseUser? {
-        return try {
-            if( auth.currentUser != null) {
+    suspend fun getAuthUser(): FirebaseUser? = withContext(Dispatchers.IO) {
+        return@withContext try {
+            if (auth.currentUser != null) {
                 auth.currentUser!!.reload().await()
                 auth.currentUser
-            }
-            else null
-        }
-        catch (e: Exception) {
+            } else null
+        } catch (e: Exception) {
             logOut()
             null
         }
@@ -38,9 +40,11 @@ class AuthRepository @Inject constructor(
 
     fun signUpWithEmail(email: String, password: String): Flow<Result<Unit>> = flow {
         try {
-            auth.createUserWithEmailAndPassword(email, password).await()
-            auth.currentUser?.sendEmailVerification()?.await()
-            emit(Result.success(Unit))
+            withContext(Dispatchers.IO) {
+                auth.createUserWithEmailAndPassword(email, password).await()
+                auth.currentUser?.sendEmailVerification()?.await()
+                emit(Result.success(Unit))
+            }
         }
         catch(e: Exception) {
             emit(Result.failure(e))
@@ -48,27 +52,22 @@ class AuthRepository @Inject constructor(
     }
 
     fun logInWithEmail(email: String, password: String): Flow<Result<Unit>> = flow {
-        try {
-            val result = auth.signInWithEmailAndPassword(email, password).await()
-            val user = result.user
-            if(user != null && user.isEmailVerified) {
-                emit(Result.success(Unit))
-            }
-            else {
-                emit(Result.failure(Exception("Email not verified")))
-            }
-        }
-        catch(e: Exception) {
-            emit(Result.failure(e))
-        }
-    }
+        val result = auth.signInWithEmailAndPassword(email, password).await()
+        val user = result.user ?: throw Exception("User not found")
+        if (user.isEmailVerified) emit(Result.success(Unit))
+        else throw Exception("Email not verified")
+    }.catch {
+        e -> emit(Result.failure(e))
+    }.flowOn(Dispatchers.IO)
 
     fun resendVerificationEmail(): Flow<Result<Unit>> = flow {
         val user = auth.currentUser
         if (user != null && !user.isEmailVerified) {
             try {
-                user.sendEmailVerification().await()
-                emit(Result.success(Unit))
+                withContext(Dispatchers.IO) {
+                    user.sendEmailVerification().await()
+                    emit(Result.success(Unit))
+                }
             }
             catch(e: Exception) {
                 emit(Result.failure(e))

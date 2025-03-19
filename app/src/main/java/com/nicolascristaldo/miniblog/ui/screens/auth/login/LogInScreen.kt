@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.nicolascristaldo.miniblog.ui.screens.auth.components.AuthButton
 import com.nicolascristaldo.miniblog.ui.components.AppTextField
+import com.nicolascristaldo.miniblog.ui.theme.authTextFieldTextColor
 
 @Composable
 fun LogInScreen(
@@ -51,6 +52,7 @@ fun LogInScreen(
             onValueChange = { viewModel.onEmailChanged(it) },
             label = "email",
             validateInput = { true },
+            textColor = authTextFieldTextColor,
             modifier = Modifier.padding(bottom = 8.dp, start = 32.dp, end = 32.dp)
         )
 
@@ -60,6 +62,7 @@ fun LogInScreen(
             label = "password",
             validateInput = { true },
             visualTransformation = PasswordVisualTransformation(),
+            textColor = authTextFieldTextColor,
             modifier = Modifier.padding(bottom = 16.dp, start = 32.dp, end = 32.dp)
         )
 

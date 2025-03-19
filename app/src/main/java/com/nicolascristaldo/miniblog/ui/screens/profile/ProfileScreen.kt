@@ -2,6 +2,7 @@ package com.nicolascristaldo.miniblog.ui.screens.profile
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
@@ -42,7 +43,6 @@ fun ProfileScreen(
                 ProfileHeader(
                     user = uiState.user,
                     authUser = uiState.authUser,
-                    formatDate = { timestamp -> viewModel.formatDate(timestamp) },
                     changeEditingState = { viewModel.changeEditingState(true) },
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
@@ -51,7 +51,8 @@ fun ProfileScreen(
 
                 PostListScreen(
                     currentUserId = uiState.authUser?.uid ?: "",
-                    uid = uid
+                    uid = uid,
+                    modifier = Modifier.fillMaxSize()
                 )
             }
 

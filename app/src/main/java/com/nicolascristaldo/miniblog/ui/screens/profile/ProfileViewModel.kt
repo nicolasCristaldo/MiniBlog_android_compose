@@ -12,9 +12,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -63,15 +60,6 @@ class ProfileViewModel @Inject constructor(
         _uiState.value.authUser?.uid?.let { uid ->
             updateUserUseCase(uid, updates)
             _uiState.update { it.copy(isEditing = false) }
-        }
-    }
-
-    fun formatDate(timestamp: Long?): String {
-        return if (timestamp != null) {
-            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            sdf.format(Date(timestamp))
-        } else {
-            "unknown"
         }
     }
 }

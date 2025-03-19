@@ -22,7 +22,6 @@ import com.nicolascristaldo.miniblog.ui.components.UserImage
 fun ProfileHeader(
     user: User?,
     authUser: FirebaseUser?,
-    formatDate: (Long?) -> String,
     changeEditingState: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -59,7 +58,7 @@ fun ProfileHeader(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = "Joined: " + formatDate(user?.createdAt),
+                text = "Joined: " + user?.formatDate(),
                 fontSize = 16.sp,
                 modifier = Modifier.weight(1f)
             )

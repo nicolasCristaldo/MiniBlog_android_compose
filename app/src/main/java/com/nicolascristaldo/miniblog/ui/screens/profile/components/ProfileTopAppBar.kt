@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileTopAppBar(
+    currentUserId: String,
+    profileUserId: String,
     navigateBack: () -> Unit,
     onLogOut: (Boolean) -> Unit,
     modifier: Modifier = Modifier
@@ -35,15 +37,17 @@ fun ProfileTopAppBar(
             }
         },
         actions = {
-            IconButton(
-                onClick = { onLogOut(true) }
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ExitToApp,
-                    contentDescription = "more",
-                    tint = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier.size(30.dp)
-                )
+            if (currentUserId == profileUserId) {
+                IconButton(
+                    onClick = { onLogOut(true) }
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                        contentDescription = "more",
+                        tint = MaterialTheme.colorScheme.onBackground,
+                        modifier = Modifier.size(30.dp)
+                    )
+                }
             }
         },
         modifier = modifier

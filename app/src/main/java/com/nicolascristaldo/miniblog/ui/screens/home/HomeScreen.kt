@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,10 +36,11 @@ fun HomeScreen(
         )
 
         Text(
-            text = "latest posts",
+            text = "Latest posts",
             fontSize = 18.sp,
+            color = MaterialTheme.colorScheme.secondary,
             modifier = Modifier
-                .padding(vertical = 8.dp)
+                .padding(start = 16.dp, bottom = 8.dp)
                 .fillMaxWidth()
         )
 

@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.nicolascristaldo.miniblog.ui.screens.auth.components.AuthButton
 import com.nicolascristaldo.miniblog.ui.components.AppTextField
+import com.nicolascristaldo.miniblog.ui.theme.authTextFieldTextColor
 
 @Composable
 fun SignUpScreen(
@@ -51,6 +52,7 @@ fun SignUpScreen(
             label = "Name",
             validateInput = { uiState.isValidName() },
             errorText = "Name must be at least 3 characters long.",
+            textColor = authTextFieldTextColor,
             modifier = Modifier.padding(bottom = 8.dp, start = 32.dp, end = 32.dp)
         )
 
@@ -60,6 +62,7 @@ fun SignUpScreen(
             label = "Email",
             validateInput = { uiState.isValidEmail() },
             errorText = "Please enter a valid email address.",
+            textColor = authTextFieldTextColor,
             modifier = Modifier.padding(bottom = 8.dp, start = 32.dp, end = 32.dp)
         )
 
@@ -70,6 +73,7 @@ fun SignUpScreen(
             validateInput = { uiState.isValidPassword() },
             visualTransformation = PasswordVisualTransformation(),
             errorText = "Password must be at least 6 characters long.",
+            textColor = authTextFieldTextColor,
             modifier = Modifier.padding(bottom = 8.dp, start = 32.dp, end = 32.dp)
         )
 
@@ -80,6 +84,7 @@ fun SignUpScreen(
             validateInput = { uiState.arePasswordsEqual() },
             visualTransformation = PasswordVisualTransformation(),
             errorText = "Passwords do not match.",
+            textColor = authTextFieldTextColor,
             modifier = Modifier.padding(bottom = 16.dp, start = 32.dp, end = 32.dp)
         )
 

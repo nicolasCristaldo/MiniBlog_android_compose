@@ -7,6 +7,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +16,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,6 +33,7 @@ fun AppTextField(
     maxLines: Int = 1,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    textColor: Color = MaterialTheme.colorScheme.onSurface,
     modifier: Modifier = Modifier
 ) {
     var isFirstTime by remember { mutableStateOf(true) }
@@ -50,7 +54,7 @@ fun AppTextField(
                 if (!validateInput() && !isFirstTime) {
                     Icon(
                         imageVector = Icons.Filled.Warning,
-                        tint = androidx.compose.material3.MaterialTheme.colorScheme.error,
+                        tint = MaterialTheme.colorScheme.error,
                         contentDescription = null
                     )
                 }
@@ -58,13 +62,14 @@ fun AppTextField(
             singleLine = singleLine,
             maxLines = maxLines,
             visualTransformation = visualTransformation,
+            textStyle = TextStyle(color = textColor),
             modifier = Modifier.fillMaxWidth()
         )
 
         if (!validateInput() && !isFirstTime) {
             Text(
                 text = errorText ?: "Invalid input",
-                color = androidx.compose.material3.MaterialTheme.colorScheme.error,
+                color = MaterialTheme.colorScheme.error,
                 fontSize = 12.sp,
                 modifier = Modifier.padding(start = 16.dp, top = 4.dp)
             )

@@ -42,7 +42,7 @@ fun PublishPostSection(
                 onPublishPost()
                 onPostContentChange("")
             },
-            enabled = uiState.isValidPost()
+            enabled = uiState.isValidPost() && uiState.postContent.isNotBlank()
         ) {
             Text(
                 text = "Send",
