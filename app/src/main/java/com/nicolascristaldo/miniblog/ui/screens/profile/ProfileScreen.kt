@@ -13,8 +13,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.nicolascristaldo.miniblog.R
 import com.nicolascristaldo.miniblog.ui.screens.post.PostListScreen
 import com.nicolascristaldo.miniblog.ui.screens.profile.components.EditProfileDialog
 import com.nicolascristaldo.miniblog.ui.screens.profile.components.ProfileHeader
@@ -36,7 +37,7 @@ fun ProfileScreen(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = if (uiState.isEditing) Modifier
-                    .blur(8.dp)
+                    .blur(dimensionResource(R.dimen.blur_radius))
                     .alpha(0.6f)
                 else Modifier
             ) {
@@ -44,10 +45,10 @@ fun ProfileScreen(
                     user = uiState.user,
                     authUser = uiState.authUser,
                     changeEditingState = { viewModel.changeEditingState(true) },
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.padding_large))
                 )
 
-                HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
+                HorizontalDivider(modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_medium)))
 
                 PostListScreen(
                     currentUserId = uiState.authUser?.uid ?: "",

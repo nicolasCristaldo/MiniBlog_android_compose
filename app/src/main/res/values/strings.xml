@@ -1,3 +1,59 @@
 <resources>
+    <!-- App Name -->
     <string name="app_name">MiniBlog</string>
+
+    <!-- Dialog Strings -->
+    <string name="dialog_logout_title">Log out</string>
+    <string name="dialog_logout_content">Are you sure you want to log out?</string>
+    <string name="dialog_logout_confirm">Log out</string>
+    <string name="dialog_delete_title">Confirm delete</string>
+    <string name="dialog_delete_content">Are you sure you want to delete this post?</string>
+    <string name="dialog_delete_confirm">Delete</string>
+    <string name="dialog_cancel">Cancel</string>
+
+    <!-- Text Field Labels -->
+    <string name="text_field_email_label">Email</string>
+    <string name="text_field_password_label">Password</string>
+    <string name="text_field_confirm_password_label">Confirm password</string>
+    <string name="text_field_name_label">Name</string>
+    <string name="text_field_bio_label">Bio</string>
+    <string name="text_field_post_label">Publish a post</string>
+
+    <!-- Text Field Error Messages -->
+    <string name="error_invalid_input">Invalid input</string>
+    <string name="error_name_length">The name must be between 3 and 20 characters.</string>
+    <string name="error_email_invalid">Please enter a valid email address.</string>
+    <string name="error_password_length">Password must be at least 6 characters long.</string>
+    <string name="error_passwords_not_match">Passwords do not match.</string>
+    <string name="error_bio_validation">Bio must be less than 100 characters</string>
+    <string name="error_post_length">Post must be less than 200 characters</string>
+
+    <!-- Button Texts -->
+    <string name="button_login">Log in</string>
+    <string name="button_signup">Sign up</string>
+    <string name="button_continue_with_google">Continue with Google</string>
+    <string name="button_resend_verification">Resend verification email</string>
+    <string name="button_edit_profile">Edit profile</string>
+    <string name="button_save">Save</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_send">Send</string>
+
+    <!-- Screen Titles and Messages -->
+    <string name="login_title">Access Your Account</string>
+    <string name="signup_title">Create Your Account</string>
+    <string name="verification_message">A verification email has been sent. Please confirm your account to continue.</string>
+    <string name="verification_resend_timer">Resend verification email in %d seconds</string>
+    <string name="home_latest_posts">Latest posts</string>
+    <string name="profile_joined">Joined: %s</string>
+
+    <!-- Content descriptions -->
+    <string name="profile_image_content_description">Profile image</string>
+    <string name="account_icon_content_description">Account</string>
+    <string name="delete_icon_content_description">Delete</string>
+    <string name="logout_icon_content_description">Sign out</string>
+    <string name="back_icon_content_description">Back</string>
+
+    <!-- Miscellaneous -->
+    <string name="initial_already_have_account">Already have an account?</string>
+    <string name="error_message">Error: %s</string>
 </resources>

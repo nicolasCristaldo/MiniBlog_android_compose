@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Paddings -->
+    <dimen name="padding_small">4.dp</dimen>
+    <dimen name="padding_medium">8.dp</dimen>
+    <dimen name="padding_large">16.dp</dimen>
+    <dimen name="padding_extra_large">32.dp</dimen>
+
+    <!-- Icon and Image Sizes -->
+    <dimen name="icon_size_small">20.dp</dimen>
+    <dimen name="icon_size_medium">24.dp</dimen>
+    <dimen name="icon_size_large">30.dp</dimen>
+    <dimen name="user_image_size_small">34.dp</dimen>
+    <dimen name="logo_size_splash">150.dp</dimen>
+    <dimen name="logo_size_initial">130.dp</dimen>
+    <dimen name="logo_size_top_bar">40.dp</dimen>
+    <dimen name="user_image_size_profile">130.dp</dimen>
+
+    <!-- Heights -->
+    <dimen name="log_button_height">48.dp</dimen>
+    <dimen name="post_card_header_height">34.dp</dimen>
+
+    <!-- Corner Radius -->
+    <dimen name="corner_radius_small">10.dp</dimen>
+    <dimen name="corner_radius_medium">16.dp</dimen>
+    <dimen name="corner_radius_large">20.dp</dimen>
+
+    <!-- Blur Effect -->
+    <dimen name="blur_radius">8.dp</dimen>
+
+    <!-- Text Sizes -->
+    <dimen name="text_size_small">12.sp</dimen>
+    <dimen name="text_size_medium">16.sp</dimen>
+    <dimen name="text_size_large">18.sp</dimen>
+    <dimen name="text_size_title_small">20.sp</dimen>
+    <dimen name="text_size_title_medium">28.sp</dimen>
+    <dimen name="text_size_title_large">32.sp</dimen>
+</resources>

@@ -8,8 +8,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.window.Dialog
+import com.nicolascristaldo.miniblog.R
 import com.nicolascristaldo.miniblog.ui.screens.profile.ProfileUiState
 
 @Composable
@@ -29,9 +30,9 @@ fun EditProfileDialog(
             modifier = modifier
                 .background(
                     color = MaterialTheme.colorScheme.primaryContainer,
-                    shape = RoundedCornerShape(16.dp)
+                    shape = RoundedCornerShape(dimensionResource(R.dimen.corner_radius_medium))
                 )
-                .padding(16.dp)
+                .padding(dimensionResource(R.dimen.padding_large))
         ) {
             EditProfileForm(
                 uiState = uiState,

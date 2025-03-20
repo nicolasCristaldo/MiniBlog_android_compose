@@ -11,7 +11,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
+import com.nicolascristaldo.miniblog.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,9 +32,9 @@ fun ProfileTopAppBar(
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "back",
+                    contentDescription = stringResource(R.string.back_icon_content_description),
                     tint = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier.size(30.dp)
+                    modifier = Modifier.size(dimensionResource(R.dimen.icon_size_large))
                 )
             }
         },
@@ -43,9 +45,9 @@ fun ProfileTopAppBar(
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ExitToApp,
-                        contentDescription = "more",
+                        contentDescription = stringResource(R.string.logout_icon_content_description),
                         tint = MaterialTheme.colorScheme.onBackground,
-                        modifier = Modifier.size(30.dp)
+                        modifier = Modifier.size(dimensionResource(R.dimen.icon_size_large))
                     )
                 }
             }

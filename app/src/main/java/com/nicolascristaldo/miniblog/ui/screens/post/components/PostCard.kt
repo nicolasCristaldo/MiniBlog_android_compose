@@ -17,10 +17,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nicolascristaldo.miniblog.R
 import com.nicolascristaldo.miniblog.domain.model.PostWithUser
 import com.nicolascristaldo.miniblog.ui.components.UserImage
 
@@ -37,26 +39,26 @@ fun PostCard(
     ) {
         UserImage(
             modifier = Modifier
-                .size(34.dp)
+                .size(dimensionResource(R.dimen.user_image_size_small))
                 .clickable { navigateToUserProfile(postWhitUser.user.uid) }
         )
         Column(
             modifier = Modifier
-                .padding(start = 8.dp)
+                .padding(start = dimensionResource(R.dimen.padding_medium))
                 .weight(1f)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
-                    .height(34.dp)
+                    .height(dimensionResource(R.dimen.post_card_header_height))
                     .fillMaxWidth()
             ) {
                 Text(
                     text = postWhitUser.user.name,
                     color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp,
+                    fontSize = dimensionResource(R.dimen.text_size_title_small).value.sp,
                     modifier = Modifier
                         .clickable { navigateToUserProfile(postWhitUser.user.uid) }
                 )
@@ -64,10 +66,10 @@ fun PostCard(
                 if(currentUserId == postWhitUser.post.userId){
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete",
+                        contentDescription = stringResource(R.string.delete_icon_content_description),
                         tint = MaterialTheme.colorScheme.error,
                         modifier = Modifier
-                            .size(20.dp)
+                            .size(dimensionResource(R.dimen.icon_size_small))
                             .clickable { onDeletePost() }
                     )
                 }
@@ -79,7 +81,7 @@ fun PostCard(
                 text = postWhitUser.post.formatDate(),
                 textAlign = TextAlign.End,
                 color = MaterialTheme.colorScheme.secondary,
-                fontSize = 12.sp,
+                fontSize = dimensionResource(R.dimen.text_size_small).value.sp,
                 modifier = Modifier.fillMaxWidth()
             )
         }

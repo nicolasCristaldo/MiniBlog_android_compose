@@ -15,15 +15,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
+import com.nicolascristaldo.miniblog.R
 import com.nicolascristaldo.miniblog.ui.theme.dark_blue
 
 @Composable
 fun LogButton(
-    text: String,
+    text: Int,
     imageRes: Int? = null,
     color: Color = Color.White,
     onClick: () -> Unit,
@@ -33,9 +35,9 @@ fun LogButton(
         contentAlignment = Alignment.CenterStart,
         modifier = modifier
             .fillMaxWidth()
-            .height(48.dp)
-            .padding(horizontal = 32.dp)
-            .clip(RoundedCornerShape(20.dp))
+            .height(dimensionResource(R.dimen.log_button_height))
+            .padding(horizontal = dimensionResource(R.dimen.padding_extra_large))
+            .clip(RoundedCornerShape(dimensionResource(R.dimen.corner_radius_large)))
             .background(color = color)
             .clickable { onClick() }
     ) {
@@ -44,12 +46,12 @@ fun LogButton(
                 painter = painterResource(imageRes),
                 contentDescription = null,
                 modifier = Modifier
-                    .padding(start = 16.dp)
-                    .size(24.dp)
+                    .padding(start = dimensionResource(R.dimen.padding_large))
+                    .size(dimensionResource(R.dimen.icon_size_medium))
             )
         }
         Text(
-            text = text,
+            text = stringResource(text),
             color = dark_blue,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,

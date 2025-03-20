@@ -5,6 +5,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.nicolascristaldo.miniblog.ui.theme.dark_blue
 import com.nicolascristaldo.miniblog.ui.theme.disabled_container
@@ -14,7 +15,7 @@ import com.nicolascristaldo.miniblog.ui.theme.light_blue
 @Composable
 fun AuthButton(
     onClick: () -> Unit,
-    text: String,
+    text: Int,
     enabled: Boolean = true,
     modifier: Modifier = Modifier,
 ) {
@@ -30,7 +31,7 @@ fun AuthButton(
         modifier = modifier
     ) {
         Text(
-            text = text,
+            text = stringResource(text),
             fontWeight = FontWeight.Bold
         )
     }

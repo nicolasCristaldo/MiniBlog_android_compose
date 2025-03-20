@@ -12,13 +12,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.nicolascristaldo.miniblog.ui.screens.auth.components.AuthButton
+import com.nicolascristaldo.miniblog.R
 import com.nicolascristaldo.miniblog.ui.components.AppTextField
+import com.nicolascristaldo.miniblog.ui.screens.auth.components.AuthButton
 import com.nicolascristaldo.miniblog.ui.theme.authTextFieldTextColor
 
 @Composable
@@ -39,60 +41,76 @@ fun SignUpScreen(
         modifier = modifier
     ) {
         Text(
-            text = "Create Your Account",
-            fontSize = 32.sp,
+            text = stringResource(R.string.signup_title),
+            fontSize = dimensionResource(R.dimen.text_size_title_large).value.sp,
             textAlign = TextAlign.Center,
             color = Color.White,
-            modifier = Modifier.padding(bottom = 32.dp)
+            modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_extra_large))
         )
 
         AppTextField(
             value = uiState.name,
             onValueChange = { viewModel.onNameChanged(it) },
-            label = "Name",
+            label = R.string.text_field_name_label,
             validateInput = { uiState.isValidName() },
-            errorText = "Name must be at least 3 characters long.",
+            errorText = R.string.error_name_length,
             textColor = authTextFieldTextColor,
-            modifier = Modifier.padding(bottom = 8.dp, start = 32.dp, end = 32.dp)
+            modifier = Modifier.padding(
+                bottom = dimensionResource(R.dimen.padding_medium),
+                start = dimensionResource(R.dimen.padding_extra_large),
+                end = dimensionResource(R.dimen.padding_extra_large)
+            )
         )
 
         AppTextField(
             value = uiState.email,
             onValueChange = { viewModel.onEmailChanged(it) },
-            label = "Email",
+            label = R.string.text_field_email_label,
             validateInput = { uiState.isValidEmail() },
-            errorText = "Please enter a valid email address.",
+            errorText = R.string.error_email_invalid,
             textColor = authTextFieldTextColor,
-            modifier = Modifier.padding(bottom = 8.dp, start = 32.dp, end = 32.dp)
+            modifier = Modifier.padding(
+                bottom = dimensionResource(R.dimen.padding_medium),
+                start = dimensionResource(R.dimen.padding_extra_large),
+                end = dimensionResource(R.dimen.padding_extra_large)
+            )
         )
 
         AppTextField(
             value = uiState.password,
             onValueChange = { viewModel.onPasswordChanged(it) },
-            label = "Password",
+            label = R.string.text_field_password_label,
             validateInput = { uiState.isValidPassword() },
             visualTransformation = PasswordVisualTransformation(),
-            errorText = "Password must be at least 6 characters long.",
+            errorText = R.string.error_password_length,
             textColor = authTextFieldTextColor,
-            modifier = Modifier.padding(bottom = 8.dp, start = 32.dp, end = 32.dp)
+            modifier = Modifier.padding(
+                bottom = dimensionResource(R.dimen.padding_medium),
+                start = dimensionResource(R.dimen.padding_extra_large),
+                end = dimensionResource(R.dimen.padding_extra_large)
+            )
         )
 
         AppTextField(
             value = uiState.confirmPassword,
             onValueChange = { viewModel.onConfirmPasswordChanged(it) },
-            label = "Confirm password",
+            label = R.string.text_field_confirm_password_label,
             validateInput = { uiState.arePasswordsEqual() },
             visualTransformation = PasswordVisualTransformation(),
-            errorText = "Passwords do not match.",
+            errorText = R.string.error_passwords_not_match,
             textColor = authTextFieldTextColor,
-            modifier = Modifier.padding(bottom = 16.dp, start = 32.dp, end = 32.dp)
+            modifier = Modifier.padding(
+                bottom = dimensionResource(R.dimen.padding_large),
+                start = dimensionResource(R.dimen.padding_extra_large),
+                end = dimensionResource(R.dimen.padding_extra_large)
+            )
         )
 
         AuthButton(
             onClick = { viewModel.signUp() },
             enabled = uiState.validateInputForm() && !uiState.isLoading,
-            text = "Sign up",
-            modifier = Modifier.padding(bottom = 8.dp)
+            text = R.string.button_signup,
+            modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
         )
 
         uiState.error?.let {
@@ -100,8 +118,8 @@ fun SignUpScreen(
                 text = it,
                 color = MaterialTheme.colorScheme.error,
                 textAlign = TextAlign.Center,
-                fontSize = 12.sp,
-                modifier = Modifier.padding(horizontal = 8.dp)
+                fontSize = dimensionResource(R.dimen.text_size_small).value.sp,
+                modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.padding_medium))
             )
         }
     }

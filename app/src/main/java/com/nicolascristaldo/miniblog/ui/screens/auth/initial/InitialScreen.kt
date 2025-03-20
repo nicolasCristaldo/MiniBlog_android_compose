@@ -11,8 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nicolascristaldo.miniblog.R
 import com.nicolascristaldo.miniblog.ui.components.LogoImage
@@ -32,43 +33,43 @@ fun InitialScreen(
         Spacer(modifier = Modifier.weight(.5f))
         LogoImage(
             modifier = Modifier
-                .size(130.dp)
-                .padding(bottom = 32.dp)
+                .size(dimensionResource(R.dimen.logo_size_initial))
+                .padding(bottom = dimensionResource(R.dimen.padding_extra_large))
         )
 
         Text(
-            text = "MiniBlog",
+            text = stringResource(R.string.app_name),
             color = Color.White,
             fontWeight = FontWeight.Bold,
-            fontSize = 32.sp
+            fontSize = dimensionResource(R.dimen.text_size_title_large).value.sp
         )
 
         Spacer(modifier = Modifier.weight(1f))
 
         LogButton(
-            text = "Sign up",
+            text = R.string.button_signup,
             color = light_blue,
             onClick = { navigateToSignUp() },
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_large))
         )
 
         LogButton(
-            text = "Continue with Google",
+            text = R.string.button_continue_with_google,
             imageRes = R.drawable.google,
             onClick = { /*TODO*/ },
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_large))
         )
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "Already have an account?",
+                text = stringResource(R.string.initial_already_have_account),
                 color = Color.White,
-                modifier = Modifier.padding(end = 8.dp)
+                modifier = Modifier.padding(end = dimensionResource(R.dimen.padding_medium))
             )
             Text(
-                text = "Log in",
+                text = stringResource(R.string.button_login),
                 color = light_blue,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.clickable { navigateToLogIn() }

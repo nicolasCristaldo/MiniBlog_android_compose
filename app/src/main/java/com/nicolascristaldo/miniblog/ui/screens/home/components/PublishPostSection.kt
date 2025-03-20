@@ -8,8 +8,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
+import com.nicolascristaldo.miniblog.R
 import com.nicolascristaldo.miniblog.ui.components.AppTextField
 import com.nicolascristaldo.miniblog.ui.screens.home.HomeUiState
 
@@ -27,13 +29,17 @@ fun PublishPostSection(
         AppTextField(
             value = uiState.postContent,
             onValueChange = { onPostContentChange(it) },
-            label = "Publish a post",
+            label = R.string.text_field_post_label,
             validateInput = { uiState.isValidPost() },
-            errorText = "Post must be less than 200 characters",
+            errorText = R.string.error_post_length,
             singleLine = false,
             maxLines = 4,
             modifier = Modifier
-                .padding(bottom = 8.dp, start = 8.dp, end = 8.dp)
+                .padding(
+                    bottom = dimensionResource(R.dimen.padding_medium),
+                    start = dimensionResource(R.dimen.padding_medium),
+                    end = dimensionResource(R.dimen.padding_medium)
+                )
                 .fillMaxWidth()
         )
 
@@ -45,7 +51,7 @@ fun PublishPostSection(
             enabled = uiState.isValidPost() && uiState.postContent.isNotBlank()
         ) {
             Text(
-                text = "Send",
+                text = stringResource(R.string.button_send),
                 fontWeight = FontWeight.Bold
             )
         }

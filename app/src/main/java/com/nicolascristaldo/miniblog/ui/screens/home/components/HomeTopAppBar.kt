@@ -10,7 +10,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
+import com.nicolascristaldo.miniblog.R
 import com.nicolascristaldo.miniblog.ui.components.LogoImage
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,7 +25,7 @@ fun HomeTopAppBar(
         title = {
             LogoImage(
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(40.dp)
+                modifier = Modifier.size(dimensionResource(R.dimen.logo_size_top_bar))
             )
         },
         navigationIcon = {
@@ -32,9 +34,9 @@ fun HomeTopAppBar(
             ) {
                 Icon(
                     imageVector = Icons.Filled.AccountCircle,
-                    contentDescription = "Account",
+                    contentDescription = stringResource(R.string.account_icon_content_description),
                     tint = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier.size(30.dp)
+                    modifier = Modifier.size(dimensionResource(R.dimen.icon_size_large))
                 )
             }
         },

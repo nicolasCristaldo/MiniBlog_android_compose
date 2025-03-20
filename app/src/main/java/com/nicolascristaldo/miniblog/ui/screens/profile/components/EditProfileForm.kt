@@ -11,7 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
+import com.nicolascristaldo.miniblog.R
 import com.nicolascristaldo.miniblog.ui.components.AppTextField
 import com.nicolascristaldo.miniblog.ui.screens.profile.ProfileUiState
 
@@ -37,21 +39,21 @@ fun EditProfileForm(
         AppTextField(
             value = uiState.editingName,
             onValueChange = { changeName(it) },
-            label = "Name",
+            label = R.string.text_field_name_label,
             validateInput = { uiState.isValidName() },
-            errorText = "Name must be between 3 and 20 characters",
-            modifier = Modifier.padding(bottom = 8.dp)
+            errorText = R.string.error_name_length,
+            modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
         )
 
         AppTextField(
             value = uiState.editingBio,
             onValueChange = { changeBio(it) },
-            label = "Bio",
+            label = R.string.text_field_bio_label,
             validateInput = { uiState.isValidBio() },
-            errorText = "Bio must be less than 100 characters",
+            errorText = R.string.error_bio_validation,
             singleLine = false,
             maxLines = 4,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_large))
         )
 
         Row(
@@ -61,14 +63,14 @@ fun EditProfileForm(
             Button(
                 onClick = { onCancel() }
             ) {
-                Text(text = "Cancel")
+                Text(text = stringResource(R.string.button_cancel))
             }
 
             Button(
                 onClick = { onSave() },
                 enabled = uiState.isValidInputForm()
             ) {
-                Text(text = "Save")
+                Text(text = stringResource(R.string.button_save))
             }
         }
     }

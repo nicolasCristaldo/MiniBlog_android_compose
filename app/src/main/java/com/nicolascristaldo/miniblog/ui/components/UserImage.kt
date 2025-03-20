@@ -7,7 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import com.nicolascristaldo.miniblog.R
 
 @Composable
@@ -16,9 +18,9 @@ fun UserImage(
 ) {
     Image(
         painter = painterResource(id = R.drawable.ic_user),
-        contentDescription = "profile image",
+        contentDescription = stringResource(R.string.profile_image_content_description),
         modifier = modifier
-            .clip(RoundedCornerShape(10))
+            .clip(RoundedCornerShape(dimensionResource(R.dimen.corner_radius_small)))
             .background(color = Color.LightGray)
     )
 }

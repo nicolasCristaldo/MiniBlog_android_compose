@@ -6,14 +6,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.nicolascristaldo.miniblog.R
 
 @Composable
 fun AppAlertDialog(
-    title: String,
-    content: String,
-    confirmText: String,
+    title: Int,
+    content: Int,
+    confirmText: Int,
     onConfirm: () -> Unit,
     onCancel: () -> Unit,
     modifier: Modifier = Modifier
@@ -22,21 +25,21 @@ fun AppAlertDialog(
         onDismissRequest = { onCancel() },
         title = {
             Text(
-                text = title,
+                text = stringResource(title),
                 fontWeight = FontWeight.Bold,
-                fontSize = 20.sp
+                fontSize = dimensionResource(R.dimen.text_size_title_small).value.sp
             )
         },
-        text = { Text(text = content) },
+        text = { Text(text = stringResource(content)) },
         confirmButton = {
             Text(
-                text = confirmText,
+                text = stringResource(confirmText),
                 modifier = Modifier.clickable { onConfirm() }
             )
         },
         dismissButton = {
             Text(
-                text = "Cancel",
+                text = stringResource(R.string.dialog_cancel),
                 modifier = Modifier.clickable { onCancel() }
             )
         },

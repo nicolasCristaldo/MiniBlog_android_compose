@@ -10,8 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
+import com.nicolascristaldo.miniblog.R
 import com.nicolascristaldo.miniblog.ui.screens.home.components.PublishPostSection
 import com.nicolascristaldo.miniblog.ui.screens.post.PostListScreen
 
@@ -31,16 +33,22 @@ fun HomeScreen(
             onPostContentChange = viewModel::changePostContent,
             onPublishPost = viewModel::publishPost,
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .padding(
+                    horizontal = dimensionResource(R.dimen.padding_large),
+                    vertical = dimensionResource(R.dimen.padding_medium)
+                )
                 .fillMaxWidth()
         )
 
         Text(
-            text = "Latest posts",
-            fontSize = 18.sp,
+            text = stringResource(R.string.home_latest_posts),
+            fontSize = dimensionResource(R.dimen.text_size_large).value.sp,
             color = MaterialTheme.colorScheme.secondary,
             modifier = Modifier
-                .padding(start = 16.dp, bottom = 8.dp)
+                .padding(
+                    start = dimensionResource(R.dimen.padding_large),
+                    bottom = dimensionResource(R.dimen.padding_medium)
+                )
                 .fillMaxWidth()
         )
 

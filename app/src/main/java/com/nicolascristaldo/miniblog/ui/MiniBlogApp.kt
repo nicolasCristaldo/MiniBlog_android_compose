@@ -8,10 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.nicolascristaldo.miniblog.R
 import com.nicolascristaldo.miniblog.ui.components.AppAlertDialog
 import com.nicolascristaldo.miniblog.ui.navigation.AppDestinations
 import com.nicolascristaldo.miniblog.ui.navigation.MiniBlogNavHost
@@ -42,14 +43,14 @@ fun MiniBlogApp(
                             AppDestinations.Profile.createRoute(uiState.user?.uid ?: "")
                         )
                     },
-                    modifier = Modifier.padding(horizontal = 8.dp)
+                    modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.padding_medium))
                 )
                 AppDestinations.Profile.route -> ProfileTopAppBar(
                     navigateBack = navController::popBackStack,
                     onLogOut = homeViewModel::changeLogOutDialogState,
                     currentUserId = uiState.authUser?.uid ?: "",
                     profileUserId = profileUserId ?: "",
-                    modifier = Modifier.padding(horizontal = 8.dp)
+                    modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.padding_medium))
                 )
             }
 
@@ -65,9 +66,9 @@ fun MiniBlogApp(
 
             if (uiState.showLogOutDialog) {
                 AppAlertDialog(
-                    title = "Log out",
-                    content = "Are you sure you want to log out?",
-                    confirmText = "Log out",
+                    title = R.string.dialog_logout_title,
+                    content = R.string.dialog_logout_content,
+                    confirmText = R.string.dialog_logout_confirm,
                     onConfirm = {
                         homeViewModel.logOut()
                         navController.navigate(AppDestinations.Initial.route) {

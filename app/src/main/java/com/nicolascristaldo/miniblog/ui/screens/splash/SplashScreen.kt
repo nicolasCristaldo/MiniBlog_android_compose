@@ -9,7 +9,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
+import com.nicolascristaldo.miniblog.R
 import com.nicolascristaldo.miniblog.ui.components.LogoImage
 import com.nicolascristaldo.miniblog.ui.screens.auth.AuthViewModel
 import kotlinx.coroutines.delay
@@ -39,7 +40,7 @@ fun SplashScreen(
     ) {
         LogoImage(
             color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.size(150.dp)
+            modifier = Modifier.size(dimensionResource(R.dimen.logo_size_splash))
         )
     }
 }

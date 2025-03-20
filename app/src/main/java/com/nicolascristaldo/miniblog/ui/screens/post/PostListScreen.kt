@@ -10,8 +10,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.nicolascristaldo.miniblog.R
 import com.nicolascristaldo.miniblog.ui.components.AppAlertDialog
 import com.nicolascristaldo.miniblog.ui.screens.post.components.PostCard
 
@@ -40,7 +41,10 @@ fun PostListScreen(
                 onDeletePost = { viewModel.changePostToDeleteValue(postWhitUser.post.id) },
                 navigateToUserProfile = navigateToUserProfile,
                 modifier = Modifier
-                    .padding(vertical = 8.dp, horizontal = 12.dp)
+                    .padding(
+                        vertical = dimensionResource(R.dimen.padding_medium),
+                        horizontal = dimensionResource(R.dimen.padding_large)
+                    )
                     .fillMaxWidth()
             )
             HorizontalDivider()
@@ -49,12 +53,12 @@ fun PostListScreen(
 
     if(postToDelete != null) {
         AppAlertDialog(
-            title = "Confirm delete",
-            content = "Are you sure you want to delete this post?",
-            confirmText = "Delete",
+            title = R.string.dialog_delete_title,
+            content = R.string.dialog_delete_content,
+            confirmText = R.string.dialog_delete_confirm,
             onConfirm = { viewModel.deletePost() },
             onCancel = { viewModel.changePostToDeleteValue() },
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))
         )
     }
 }
