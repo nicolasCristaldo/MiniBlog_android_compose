@@ -10,5 +10,5 @@ data class HomeUiState(
     val postContent: String = "",
     val sendPostEnabled: Boolean = false
 ) {
-    fun isValidPost() = postContent.length <= 200 //&& postContent.isNotBlank()
+    fun isValidPost() = postContent.length <= 200
 }

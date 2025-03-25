@@ -13,6 +13,9 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel for managing post operations.
+ */
 @HiltViewModel
 class PostViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
@@ -25,6 +28,18 @@ class PostViewModel @Inject constructor(
     private val _postToDelete = MutableStateFlow<String?>(null)
     val postToDelete get() = _postToDelete.asStateFlow()
 
+    /**
+     * Updates the value of the post to delete.
+     * @param postId The ID of the post to delete.
+     */
+    fun changePostToDeleteValue(postId: String? = null) {
+        _postToDelete.value = postId
+    }
+
+    /**
+     * Listens for changes in posts and updates the UI.
+     * @param uid The user ID to filter posts (optional).
+     */
     fun listenPostsChanges(uid: String? = null) = viewModelScope.launch {
         listenPostUseCase(uid)
             .catch { _posts.value = emptyList() }
@@ -37,14 +52,13 @@ class PostViewModel @Inject constructor(
             }
     }
 
+    /**
+     * Deletes the selected post.
+     */
     fun deletePost() = viewModelScope.launch {
         if(_postToDelete.value != null) {
             deletePostUseCase(_postToDelete.value!!)
             _postToDelete.value = null
         }
-    }
-
-    fun changePostToDeleteValue(postId: String? = null) {
-        _postToDelete.value = postId
     }
 }

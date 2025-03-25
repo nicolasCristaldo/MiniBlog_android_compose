@@ -14,6 +14,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel for managing profile screen state and logic.
+ */
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getAuthUserUseCase: GetAuthUserUseCase,
@@ -33,24 +36,43 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Updates the visibility of the edit profile dialog.
+     * @param editingState The new visibility state of the dialog.
+     */
+    fun changeEditingState(editingState: Boolean) {
+        _uiState.update { it.copy(isEditing = editingState) }
+    }
+
+    /**
+     * Updates the value of the editingName field of the UI state.
+     * @param newName The new name value to set.
+     */
+    fun changeEditingName(newName: String) {
+        _uiState.update { it.copy(editingName = newName) }
+    }
+
+    /**
+     * Updates the value of the editingBio field of the UI state.
+     * @param newBio The new bio value to set.
+     */
+    fun changeEditingBio(newBio: String) {
+        _uiState.update { it.copy(editingBio = newBio) }
+    }
+
+    /**
+     * Listens for changes in the user's profile and updates the UI.
+     * @param uid The user ID to listen for changes.
+     */
     fun listenUserChanges(uid: String) = viewModelScope.launch {
         usersRepository.listenUserChanges(uid)
             .catch { _uiState.update { it.copy(user = null) } }
             .collect { user -> _uiState.update { it.copy(user = user) } }
     }
 
-    fun changeEditingState(editingState: Boolean) {
-        _uiState.update { it.copy(isEditing = editingState) }
-    }
-
-    fun changeEditingName(newName: String) {
-        _uiState.update { it.copy(editingName = newName) }
-    }
-
-    fun changeEditingBio(newBio: String) {
-        _uiState.update { it.copy(editingBio = newBio) }
-    }
-
+    /**
+     * Updates the user's profile with the current editing values.
+     */
     fun updateUser() = viewModelScope.launch {
         val updates = mapOf(
             "name" to _uiState.value.editingName,

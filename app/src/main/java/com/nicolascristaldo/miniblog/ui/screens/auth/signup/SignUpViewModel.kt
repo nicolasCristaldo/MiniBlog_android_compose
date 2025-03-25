@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel for managing sign-up screen state and logic.
+ */
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val repository: AuthRepository,
@@ -20,22 +23,42 @@ class SignUpViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(SignUpUiState())
     val uiState get() = _uiState.asStateFlow()
 
+    /**
+     * Updates the name field in the UI state.
+     * @param newName The new name value to set.
+     */
     fun onNameChanged(newName: String) {
         _uiState.update { _uiState.value.copy(name = newName) }
     }
 
+    /**
+     * Updates the email field in the UI state.
+     * @param newEmail The new email value to set.
+     */
     fun onEmailChanged(newEmail: String) {
         _uiState.update { _uiState.value.copy(email = newEmail) }
     }
 
+    /**
+     * Updates the password field in the UI state.
+     * @param newPassword The new password value to set.
+     */
     fun onPasswordChanged(newPassword: String) {
         _uiState.update { _uiState.value.copy(password = newPassword) }
     }
 
+    /**
+     * Updates the confirm password field in the UI state.
+     * @param newConfirmPassword The new confirm password value to set.
+     */
     fun onConfirmPasswordChanged(newConfirmPassword: String) {
         _uiState.update { _uiState.value.copy(confirmPassword = newConfirmPassword) }
     }
 
+    /**
+     * Initiates a sign-up attempt with the current state in the UI.
+     * Updates the UI state based on the authentication result.
+     */
     fun signUp() {
         val state = _uiState.value
         _uiState.value = state.copy(isLoading = true, error = null)
@@ -53,6 +76,10 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Creates a user profile with the provided name and saves it to the data source.
+     * @param name The name of the user.
+     */
     private suspend fun createUserProfile(name: String) {
         val currentUser = repository.getAuthUser()
         currentUser?.let {

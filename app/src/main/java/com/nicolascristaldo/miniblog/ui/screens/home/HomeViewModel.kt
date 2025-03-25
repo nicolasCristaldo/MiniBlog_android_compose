@@ -15,6 +15,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel for managing home screen state and logic.
+ */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getAuthUserUseCase: GetAuthUserUseCase,
@@ -34,6 +37,25 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Updates the visibility of the log out dialog.
+     * @param show The new visibility state of the dialog.
+     */
+    fun changeLogOutDialogState(show: Boolean) {
+        _uiState.update { _uiState.value.copy(showLogOutDialog = show) }
+    }
+
+    /**
+     * Updates the content of the post.
+     * @param content The new content of the post.
+     */
+    fun changePostContent(content: String) {
+        _uiState.update { _uiState.value.copy(postContent = content) }
+    }
+
+    /**
+     * Loads the user's information from the data source.
+     */
     fun loadUser() = viewModelScope.launch {
         val authUser = getAuthUserUseCase()
         authUser?.let {
@@ -42,6 +64,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Publishes a new post with the current content.
+     */
     fun publishPost() = viewModelScope.launch {
         if (_uiState.value.user != null) {
             val newPost = Post(
@@ -52,14 +77,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun changeLogOutDialogState(show: Boolean) {
-        _uiState.update { _uiState.value.copy(showLogOutDialog = show) }
-    }
-
-    fun changePostContent(content: String) {
-        _uiState.update { _uiState.value.copy(postContent = content) }
-    }
-
+    /**
+     * Logs out the current user.
+     */
     fun logOut() {
         logOutUseCase()
         _uiState.value = HomeUiState()

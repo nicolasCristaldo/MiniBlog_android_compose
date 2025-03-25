@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import com.nicolascristaldo.miniblog.R
 import com.nicolascristaldo.miniblog.ui.components.LogoImage
+import com.nicolascristaldo.miniblog.ui.navigation.AppDestinations
 import com.nicolascristaldo.miniblog.ui.screens.auth.AuthViewModel
 import kotlinx.coroutines.delay
 
@@ -24,13 +25,14 @@ fun SplashScreen(
     val user by viewModel.userState.collectAsState()
 
     LaunchedEffect(user) {
-        if(user != null) {
-            val destination = if (user?.isEmailVerified == true) "home" else "initial"
+        if (user != null) {
+            viewModel.checkAndCreateUserProfile()
+            val destination = if (user?.isEmailVerified == true) AppDestinations.Home.route
+            else AppDestinations.Initial.route
             navigate(destination)
-        }
-        else {
+        } else {
             delay(3000)
-            navigate("initial")
+            navigate(AppDestinations.Initial.route)
         }
     }
 
