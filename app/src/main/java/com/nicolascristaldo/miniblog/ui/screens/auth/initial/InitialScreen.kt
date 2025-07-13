@@ -53,12 +53,12 @@ fun InitialScreen(
             modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_large))
         )
 
-        LogButton(
+        /*LogButton(
             text = R.string.button_continue_with_google,
             imageRes = R.drawable.google,
             onClick = { /*TODO*/ },
             modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_large))
-        )
+        )*/
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
