@@ -11,6 +11,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
@@ -60,5 +61,25 @@ class LoginViewModelTest {
         assertFalse(loginViewModel.uiState.value.isSuccess)
         assertFalse(loginViewModel.uiState.value.isLoading)
         assertNotNull(loginViewModel.uiState.value.error)
+    }
+
+    @Test
+    fun `onEmailChanged updates the email field`() = runTest {
+        //given
+        val email = "user@email.com"
+        //when
+        loginViewModel.onEmailChanged(email)
+        //then
+        assertEquals(email, loginViewModel.uiState.value.email)
+    }
+
+    @Test
+    fun `onPasswordChanged updates the password field`() = runTest {
+        //given
+        val password = "abc123"
+        //when
+        loginViewModel.onPasswordChanged(password)
+        //then
+        assertEquals(password, loginViewModel.uiState.value.password)
     }
 }

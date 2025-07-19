@@ -12,6 +12,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
@@ -65,5 +66,107 @@ class SignUpViewModelTest {
         assertFalse(signUpViewModel.uiState.value.isSuccess)
         assertFalse(signUpViewModel.uiState.value.isLoading)
         assertNotNull(signUpViewModel.uiState.value.error)
+    }
+
+    @Test
+    fun `onNameChanged updates name field`() = runTest {
+        //given
+        val name = "name"
+        //when
+        signUpViewModel.onNameChanged(name)
+        //then
+        assertEquals(name, signUpViewModel.uiState.value.name)
+    }
+
+    @Test
+    fun `isValidName returns true when name is in valid range`() = runTest {
+        //given
+        signUpViewModel.onNameChanged("name")
+        //when
+        val isValid = signUpViewModel.uiState.value.isValidName()
+        //then
+        assertTrue(isValid)
+    }
+
+    @Test
+    fun `isValidName returns false when name is not in valid range`() = runTest {
+        //given
+        signUpViewModel.onNameChanged("a")
+        //when
+        val isValid = signUpViewModel.uiState.value.isValidName()
+        //then
+        assertFalse(isValid)
+    }
+
+    @Test
+    fun `onPasswordChanged updates password field`() = runTest {
+        //given
+        val password = "abc123"
+        //when
+        signUpViewModel.onPasswordChanged(password)
+        //then
+        assertEquals(password, signUpViewModel.uiState.value.password)
+    }
+
+    @Test
+    fun `isValidPassword returns true when password is in valid range`() = runTest {
+        //given
+        signUpViewModel.onPasswordChanged("abc123")
+        //when
+        val isValid = signUpViewModel.uiState.value.isValidPassword()
+        //then
+        assertTrue(isValid)
+    }
+
+    @Test
+    fun `isValidPassword returns false when password is not in valid range`() = runTest {
+        //given
+        signUpViewModel.onPasswordChanged("123")
+        //when
+        val isValid = signUpViewModel.uiState.value.isValidPassword()
+        //then
+        assertFalse(isValid)
+    }
+
+    @Test
+    fun `onConfirmPasswordChanged updates confirm password field`() = runTest {
+        //given
+        val confirmPassword = "abc123"
+        //when
+        signUpViewModel.onConfirmPasswordChanged(confirmPassword)
+        //then
+        assertEquals(confirmPassword, signUpViewModel.uiState.value.confirmPassword)
+    }
+
+    @Test
+    fun `arePasswordsEqual returns true when passwords are equal`() = runTest {
+        //given
+        signUpViewModel.onPasswordChanged("abc123")
+        signUpViewModel.onConfirmPasswordChanged("abc123")
+        //when
+        val isValid = signUpViewModel.uiState.value.arePasswordsEqual()
+        //then
+        assertTrue(isValid)
+    }
+
+    @Test
+    fun `arePasswordsEqual returns false when passwords are not equal`() = runTest {
+        //given
+        signUpViewModel.onPasswordChanged("abc123")
+        signUpViewModel.onConfirmPasswordChanged("abc12345")
+        //when
+        val isValid = signUpViewModel.uiState.value.arePasswordsEqual()
+        //then
+        assertFalse(isValid)
+    }
+
+    @Test
+    fun `onEmailChanged updates email field`() = runTest {
+        //given
+        val email = "user@email.com"
+        //when
+        signUpViewModel.onEmailChanged(email)
+        //then
+        assertEquals(email, signUpViewModel.uiState.value.email)
     }
 }
